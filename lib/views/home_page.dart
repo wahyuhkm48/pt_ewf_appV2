@@ -118,12 +118,7 @@ class _HomePageState extends State<HomePage> {
                   if (articles.isEmpty) {
                     return const EmptyState(icon: Icons.article_outlined, title: 'Belum ada berita');
                   }
-                  return ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: articles.length,
-                    separatorBuilder: (_, _) => const SizedBox(width: 12),
-                    itemBuilder: (context, index) => _NewsCard(article: articles[index]),
-                  );
+                  return _NewsCarousel(articles: articles);
                   }),
                 ),
               ),
@@ -478,6 +473,86 @@ class _FeatureTile extends StatelessWidget {
             ).copyWith(height: 1.35),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _NewsCarousel extends StatefulWidget {
+  final List<NewsModel> articles;
+  const _NewsCarousel({required this.articles});
+
+  @override
+  State<_NewsCarousel> createState() => _NewsCarouselState();
+}
+
+class _NewsCarouselState extends State<_NewsCarousel> {
+  static const double _cardWidth = 280; 
+  static const double _gap = 12;
+  static const Duration _interval = Duration(seconds: 4);
+
+  final ScrollController _controller = ScrollController();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(_interval, (_) => _slide());
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  void _slide() {
+    if (!mounted || !_controller.hasClients) return;
+    if (!TickerMode.valuesOf(context).enabled) return; 
+    if (MediaQuery.disableAnimationsOf(context)) return; 
+
+    final pos = _controller.position;
+    if (pos.maxScrollExtent <= 0) return;
+
+    const step = _cardWidth + _gap;
+    final atEnd = pos.pixels >= pos.maxScrollExtent - 4;
+
+    // Satu kartu ke kanan; kalau sudah di ujung, kembali ke kartu pertama.
+    var target = atEnd ? 0.0 : ((pos.pixels / step).floor() + 1) * step;
+    if (target > pos.maxScrollExtent) target = pos.maxScrollExtent;
+
+    _controller.animateTo(
+      target,
+      duration: Duration(milliseconds: atEnd ? 800 : 600),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Listener(
+      // Saat disentuh atau digeser pengguna, hentikan geser otomatis;
+      // lanjut lagi setelah jari dilepas.
+      onPointerDown: (_) => _stopTimer(),
+      onPointerUp: (_) => _startTimer(),
+      onPointerCancel: (_) => _startTimer(),
+      child: ListView.separated(
+        controller: _controller,
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.articles.length,
+        separatorBuilder: (_, _) => const SizedBox(width: _gap),
+        itemBuilder: (context, index) => _NewsCard(article: widget.articles[index]),
       ),
     );
   }
