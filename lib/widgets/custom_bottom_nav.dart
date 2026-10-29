@@ -3,51 +3,36 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
-class SpeedDialAction {
-  final String iconAsset;
+class NavItemData {
+  final IconData icon;       // ikon saat tidak aktif
+  final IconData activeIcon; // ikon di dalam lingkaran saat aktif
   final String label;
-  final VoidCallback onTap;
 
-  const SpeedDialAction({required this.iconAsset, required this.label, required this.onTap});
+  const NavItemData({
+    required this.icon,
+    required this.activeIcon,
+    required this.label,
+  });
 }
 
-/// Bar navigasi bawah + tombol kalkulator mengambang.
-/// PENTING: widget ini sekarang didesain untuk dipasang di dalam sebuah
-/// Stack yang membungkus SELURUH body (bukan lagi di slot bottomNavigationBar
-/// Scaffold yang sempit) — supaya tombol speed-dial bisa "melayang" ke atas
-/// tanpa perlu area kosong yang di-reserve permanen. Lihat cara pakainya
-/// di views/main_shell.dart.
-class CustomBottomNav extends StatefulWidget {
+/// Bar navigasi bawah dengan lingkaran aktif yang "naik" di atas bar.
+/// Dipasang di dalam Stack yang membungkus body (lihat views/main_shell.dart).
+class CustomBottomNav extends StatelessWidget {
+  final List<NavItemData> items;
   final int currentIndex;
   final ValueChanged<int> onTap;
-  final List<SpeedDialAction> calculatorActions;
 
   const CustomBottomNav({
     super.key,
+    required this.items,
     required this.currentIndex,
     required this.onTap,
-    required this.calculatorActions,
   });
 
-  @override
-  State<CustomBottomNav> createState() => _CustomBottomNavState();
-}
-
-class _CustomBottomNavState extends State<CustomBottomNav> {
-  bool _isExpanded = false;
-
-  // Jarak maksimum tombol speed-dial menonjol ke atas pill bar (saat expanded).
-  static const double _floatSpace = 92;
   static const double _barHeight = 66;
-
-  void _toggleExpand() {
-    setState(() => _isExpanded = !_isExpanded);
-  }
-
-  void _handleActionTap(SpeedDialAction action) {
-    setState(() => _isExpanded = false);
-    action.onTap();
-  }
+  static const double _circleSize = 60;
+  static const double _rise = 25; // seberapa tinggi lingkaran menonjol di atas bar
+  static const double _sideMargin = 16;
 
   @override
   Widget build(BuildContext context) {
@@ -56,191 +41,132 @@ class _CustomBottomNavState extends State<CustomBottomNav> {
     return Padding(
       padding: EdgeInsets.only(bottom: bottomSafe > 0 ? bottomSafe : 12),
       child: SizedBox(
-        // Sekarang tingginya mencakup seluruh area menonjol (tidak ada lagi
-        // koordinat negatif di luar box ini), supaya hit-test-nya benar.
-        height: _floatSpace + _barHeight,
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.topCenter,
-          children: [
-            // Bar pil — sekarang di top: _floatSpace, bukan top: 0
-            Positioned(
-              left: 16,
-              right: 16,
-              top: _floatSpace,
-              child: Container(
-                height: _barHeight,
-                decoration: BoxDecoration(
-                  color: AppColors.navBarBackground,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _NavItem(
-                      icon: Icons.home_rounded,
-                      label: 'Home',
-                      selected: widget.currentIndex == 0,
-                      onTap: () => widget.onTap(0),
-                    ),
-                    _NavItem(
-                      icon: Icons.assignment_outlined,
-                      label: 'History',
-                      selected: widget.currentIndex == 1,
-                      onTap: () => widget.onTap(1),
-                    ),
-                    const SizedBox(width: 56),
-                    _NavItem(
-                      icon: Icons.bar_chart_rounded,
-                      label: 'Chart',
-                      selected: widget.currentIndex == 2,
-                      onTap: () => widget.onTap(2),
-                    ),
-                    _NavItem(
-                      icon: Icons.settings_outlined,
-                      label: 'Settings',
-                      selected: widget.currentIndex == 3,
-                      onTap: () => widget.onTap(3),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+        height: _rise + _barHeight,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final barWidth = constraints.maxWidth - _sideMargin * 2;
+            final cellWidth = barWidth / items.length;
+            final circleLeft =
+                _sideMargin + cellWidth * currentIndex + (cellWidth - _circleSize) / 2;
 
-            // Tombol-tombol mini speed dial
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 220),
-              curve: Curves.easeOut,
-              top: _isExpanded ? 0 : (_floatSpace - 34),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 180),
-                opacity: _isExpanded ? 1 : 0,
-                child: IgnorePointer(
-                  ignoring: !_isExpanded,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (int i = 0; i < widget.calculatorActions.length; i++) ...[
-                        _MiniActionButton(
-                          action: widget.calculatorActions[i],
-                          onTap: () => _handleActionTap(widget.calculatorActions[i]),
-                        ),
-                        if (i != widget.calculatorActions.length - 1) const SizedBox(width: 12),
+            return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // Bar pil
+                Positioned(
+                  left: _sideMargin,
+                  right: _sideMargin,
+                  top: _rise,
+                  child: Container(
+                    height: _barHeight,
+                    decoration: BoxDecoration(
+                      color: AppColors.navBarBackground,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (int i = 0; i < items.length; i++)
+                          Expanded(
+                            child: _NavCell(
+                              item: items[i],
+                              selected: i == currentIndex,
+                              onTap: () => onTap(i),
+                            ),
+                          ),
                       ],
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            // Tombol kalkulator utama
-            Positioned(
-              top: _floatSpace - 34,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: _toggleExpand,
-                child: Container(
-                  width: 64,
-                  height: 64,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 4),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.35),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                  ),
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: Icon(
-                      _isExpanded ? Icons.close_rounded : Icons.calculate_rounded,
-                      key: ValueKey(_isExpanded),
-                      color: Colors.white,
-                      size: 28,
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
+
+                // Lingkaran aktif: bergeser ke tab terpilih, lalu "naik"
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOutCubic,
+                  left: circleLeft,
+                  top: 0,
+                  child: IgnorePointer(
+                    // ketukan di bagian bawah lingkaran diteruskan ke sel di bawahnya
+                    child: TweenAnimationBuilder<double>(
+                      key: ValueKey(currentIndex), // animasi naik diulang tiap pindah tab
+                      tween: Tween(begin: 0, end: 1),
+                      duration: const Duration(milliseconds: 380),
+                      curve: Curves.easeOutBack,
+                      builder: (context, t, child) => Transform.translate(
+                        offset: Offset(0, (1 - t) * 14),
+                        child: Transform.scale(scale: 0.8 + 0.2 * t, child: child),
+                      ),
+                      child: Container(
+                        width: _circleSize,
+                        height: _circleSize,
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 4),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.35),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Icon(items[currentIndex].activeIcon, color: Colors.white, size: 28),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 }
 
-class _NavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
+class _NavCell extends StatelessWidget {
+  static const double _iconSize = 30;
+  static const double _iconGap = 5;
+  final NavItemData item;
   final bool selected;
   final VoidCallback onTap;
 
-  const _NavItem({
-    required this.icon,
-    required this.label,
+  const _NavCell({
+    required this.item,
     required this.selected,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? AppColors.primary : AppColors.textSecondary;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(24),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: color, size: 24),
-            const SizedBox(height: 3),
-            Text(
-              label,
-              style: AppTextStyles.micro(color: color).copyWith(fontWeight: selected ? FontWeight.w600 : FontWeight.w400),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MiniActionButton extends StatelessWidget {
-  final SpeedDialAction action;
-  final VoidCallback onTap;
-
-  const _MiniActionButton({required this.action, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        width: 52,
-        height: 52,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-          border: Border.all(color: AppColors.primary, width: 2),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.15),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(12),
-        child: ClipOval(
-          child: Image.asset(
-            action.iconAsset,
-            fit: BoxFit.contain,
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: item.label,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(32),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // Ikon hanya terlihat saat TIDAK aktif; saat aktif ikonnya ada di lingkaran.
+              // Tetap menempati ruang supaya posisi label sama di semua tab.
+              AnimatedOpacity(
+                duration: const Duration(milliseconds: 200),
+                opacity: selected ? 0 : 1,
+                child: Icon(item.icon, size: _iconSize, color: AppColors.textSecondary),
+              ),
+              const SizedBox(height: _iconGap),
+              Text(
+                item.label,
+                style: AppTextStyles.micro(
+                  color: selected ? AppColors.primary : AppColors.textSecondary,
+                ).copyWith(fontWeight: selected ? FontWeight.w600 : FontWeight.w400),
+              ),
+            ],
           ),
         ),
       ),

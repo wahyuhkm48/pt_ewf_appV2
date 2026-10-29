@@ -6,10 +6,8 @@ import '../viewmodels/recent_history_viewmodel.dart';
 import '../widgets/custom_bottom_nav.dart';
 import 'home_page.dart';
 import 'history_page.dart';
-import 'chart_page.dart';
 import 'settings_page.dart';
-import 'konsep_transaksi_page.dart';
-import 'emas_fisik_page.dart';
+import 'kalkulator_page.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
@@ -35,10 +33,10 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = [
+        final pages = [
       HomePage(onViewAllHistory: () => setState(() => _currentIndex = 1)),
       HistoryPage(key: ValueKey(_historyVersion), isActive: _currentIndex == 1),
-      const ChartPage(),
+      KalkulatorPage(onOpen: _openCalculator),
       const SettingsPage(),
     ];
 
@@ -57,17 +55,11 @@ class _MainShellState extends State<MainShell> {
             child: CustomBottomNav(
               currentIndex: _currentIndex,
               onTap: (i) => setState(() => _currentIndex = i),
-              calculatorActions: [
-                SpeedDialAction(
-                  iconAsset: 'assets/images/icons/pivot_point.png',
-                  label: 'Pivot Point',
-                  onTap: () => _openCalculator(const KonsepTransaksiPage()),
-                ),
-                SpeedDialAction(
-                  iconAsset: 'assets/images/icons/emas_fisik.png',
-                  label: 'Emas Fisik',
-                  onTap: () => _openCalculator(const EmasFisikPage()),
-                ),
+              items: const [
+                NavItemData(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Home'),
+                NavItemData(icon: Icons.assignment_outlined, activeIcon: Icons.assignment_rounded, label: 'Histori'),
+                NavItemData(icon: Icons.calculate_outlined, activeIcon: Icons.calculate_rounded, label: 'Kalkulator'),
+                NavItemData(icon: Icons.settings_outlined, activeIcon: Icons.settings_rounded, label: 'Settings'),
               ],
             ),
           ),
