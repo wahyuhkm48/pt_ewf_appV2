@@ -1,8 +1,6 @@
 // views/main_shell.dart
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
-import '../viewmodels/recent_history_viewmodel.dart';
 import '../widgets/custom_bottom_nav.dart';
 import 'home_page.dart';
 import 'history_page.dart';
@@ -28,13 +26,12 @@ class _MainShellState extends State<MainShell> {
     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => page));
     if (!mounted) return;
     setState(() => _historyVersion++);
-    context.read<RecentHistoryViewModel>().load(silent: true);
   }
 
   @override
   Widget build(BuildContext context) {
         final pages = [
-      HomePage(onViewAllHistory: () => setState(() => _currentIndex = 1)),
+      const HomePage(),
       HistoryPage(key: ValueKey(_historyVersion), isActive: _currentIndex == 1),
       KalkulatorPage(onOpen: _openCalculator),
       const SettingsPage(),

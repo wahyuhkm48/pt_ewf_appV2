@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'hot_news_page.dart';
 import 'news_detail_page.dart';
+import 'about_page.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../widgets/empty_state.dart';
-import '../widgets/recent_history_section.dart';
 import '../widgets/news_fallback_cover.dart';
 import '../widgets/skeleton.dart';
 import '../widgets/offline_widgets.dart';
 import '../models/news_model.dart';
 import '../viewmodels/news_viewmodel.dart';
-import '../viewmodels/recent_history_viewmodel.dart';
 import '../viewmodels/auth_viewmodel.dart';
 import '../utils/greeting.dart';
 import '../utils/page_transitions.dart';
@@ -24,9 +23,7 @@ const String kNewsCombinedQuery = 'Federal Reserve OR interest rate';
 const int kHomeNewsLimit = 10; 
 
 class HomePage extends StatefulWidget {
-  /// Dipanggil saat "view all" di Riwayat Terbaru ditekan (pindah ke tab History).
-  final VoidCallback? onViewAllHistory;
-  const HomePage({super.key, this.onViewAllHistory});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -47,15 +44,11 @@ class _HomePageState extends State<HomePage> {
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<NewsViewModel>().loadNews();
-      context.read<RecentHistoryViewModel>().load();
     });
   }
 
   Future<void> _refresh() async {
-    await Future.wait([
-      context.read<NewsViewModel>().loadNews(forceRefresh: true),
-      context.read<RecentHistoryViewModel>().load(silent: true),
-    ]);
+    await context.read<NewsViewModel>().loadNews(forceRefresh: true);
   }
 
   @override                   
@@ -134,15 +127,9 @@ class _HomePageState extends State<HomePage> {
                   }),
                 ),
               ),
-              const SizedBox(height: 24),
-              OnlineGate(
-                compact: true,
-                title: 'Riwayat butuh internet',
-                message: 'Riwayat perhitungan tersimpan di server.',
-                onReconnect: () => context.read<RecentHistoryViewModel>().load(silent: true),
-                child: RecentHistorySection(onViewAll: widget.onViewAllHistory),
-              ),
-              const SizedBox(height: 24),
+                            const SizedBox(height: 28),
+              const _AboutAppSection(),
+              const SizedBox(height: 80), // ruang agar tidak tertutup bar navigasi
             ],
           ),
         ),
@@ -319,6 +306,178 @@ class _WelcomeCardState extends State<_WelcomeCard> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _AboutAppSection extends StatelessWidget {
+  const _AboutAppSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Tentang Aplikasi', style: AppTextStyles.labelLg()),
+            GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                PageTransitions.slideRight(const AboutPage()),
+              ),
+              child: Text('selengkapnya', style: AppTextStyles.labelMd(color: AppColors.primary)),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'Trust by Equityworld membantu kamu membaca pasar dan menghitung level penting '
+          'untuk Gold, Nikkei, dan Hang Seng, semuanya dalam satu aplikasi.',
+          style: AppTextStyles.bodyMd().copyWith(height: 1.45),
+        ),
+        const SizedBox(height: 16),
+        const _FeaturePair(
+          left: _FeatureTile(
+            iconAsset: 'assets/images/welcome/pivot_point.webp',
+            title: 'Pivot Point',
+            desc: 'Level support, resistance, dan sinyal buy atau sell.',
+            bg: AppColors.primaryTint,
+            fg: AppColors.primary,
+          ),
+          right: _FeatureTile(
+            iconAsset: 'assets/images/welcome/nest.webp',
+            title: 'Nest',
+            desc: 'Sinyal harian dari Close kemarin dan Open hari ini.',
+            bg: AppColors.secondaryTint,
+            fg: AppColors.secondary,
+          ),
+        ),
+        const SizedBox(height: 12),
+        const _FeaturePair(
+          left: _FeatureTile(
+            iconAsset: 'assets/images/welcome/emas_fisik.webp',
+            title: 'Emas Fisik',
+            desc: 'Selisih harga dan estimasi keuntungan.',
+            bg: AppColors.successBg,
+            fg: AppColors.success,
+          ),
+          right: _FeatureTile(
+            iconAsset: 'assets/images/welcome/riwayat_kalkulator.webp' ,
+            title: 'Riwayat',
+            desc: 'Hasil hitunganmu tersimpan dan bisa dibuka lagi.',
+            bg: AppColors.primaryTint,
+            fg: AppColors.primaryDark,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.wifi_off_rounded, size: 20, color: AppColors.textSecondary),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Tanpa internet? Pivot Point dan Nest mode manual tetap bisa dipakai.',
+                  style: AppTextStyles.bodySm(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          'Hasil perhitungan adalah alat bantu analisis, bukan jaminan keuntungan.',
+          style: AppTextStyles.caption(color: AppColors.textSecondary),
+        ),
+      ],
+    );
+  }
+}
+
+/// Dua kartu sejajar dengan tinggi yang sama (aman untuk teks yang membesar).
+class _FeaturePair extends StatelessWidget {
+  final Widget left;
+  final Widget right;
+  const _FeaturePair({required this.left, required this.right});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(child: left),
+          const SizedBox(width: 12),
+          Expanded(child: right),
+        ],
+      ),
+    );
+  }
+}
+
+class _FeatureTile extends StatelessWidget {
+  final IconData? icon;
+  final String? iconAsset;
+  final String title;
+  final String desc;
+  final Color bg;
+  final Color fg;
+
+  const _FeatureTile({
+    this.icon,
+    this.iconAsset,
+    required this.title,
+    required this.desc,
+    required this.bg,
+    required this.fg,
+  }) : assert(icon != null || iconAsset != null);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+            child: iconAsset != null
+                ? Padding(
+                    padding: const EdgeInsets.all(9),
+                    child: Image.asset(
+                      iconAsset!,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, _, _) =>
+                          Icon(Icons.image_not_supported_outlined, color: fg, size: 20),
+                    ),
+                  )
+                : Icon(icon, color: fg, size: 22),
+          ),
+          const SizedBox(height: 12),
+          Text(title, style: AppTextStyles.labelBase()),
+          const SizedBox(height: 3),
+          Text(
+            desc,
+            style: AppTextStyles.caption(
+              color: AppColors.textPrimary.withValues(alpha: 0.7),
+            ).copyWith(height: 1.35),
+          ),
+        ],
       ),
     );
   }
