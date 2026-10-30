@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../utils/png_exporter.dart';
+import '../utils/watermark_config.dart';
+import 'watermark_overlay.dart';
 
 const _bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
 
@@ -63,9 +65,12 @@ class _ExportableAreaState extends State<ExportableArea> {
   }
 
   Future<Uint8List> _capture() async {
+    // Pastikan logo watermark sudah ter-decode sebelum di-capture
+    await precacheImage(const AssetImage(WatermarkConfig.logoAsset), context);
+
     setState(() => _capturing = true);
     try {
-      await WidgetsBinding.instance.endOfFrame; // tunggu header/footer tergambar
+      await WidgetsBinding.instance.endOfFrame; // tunggu header/footer/watermark tergambar
       return await PngExporter.capture(_boundaryKey);
     } finally {
       if (mounted) setState(() => _capturing = false);
@@ -108,14 +113,22 @@ class _ExportableAreaState extends State<ExportableArea> {
           child: Container(
             width: double.infinity,
             color: AppColors.background, // tanpa ini PNG-nya transparan
-            padding: _capturing ? const EdgeInsets.all(20) : EdgeInsets.zero,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+            child: Stack(
               children: [
-                if (_capturing) ..._header(),
-                widget.child,
-                if (_capturing) ..._footer(),
+                Padding(
+                  padding: _capturing ? const EdgeInsets.all(20) : EdgeInsets.zero,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_capturing) ..._header(),
+                      widget.child,
+                      if (_capturing) ..._footer(),
+                    ],
+                  ),
+                ),
+                // Watermark hanya muncul saat ekspor, tidak tampil di layar biasa
+                if (_capturing) const Positioned.fill(child: WatermarkOverlay()),
               ],
             ),
           ),

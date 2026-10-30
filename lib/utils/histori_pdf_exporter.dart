@@ -1,9 +1,11 @@
 // utils/histori_pdf_exporter.dart
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
+import 'watermark_config.dart';
 import '../models/histori_data_model.dart';
 
 class HistoriPdfExporter {
@@ -25,6 +27,15 @@ class HistoriPdfExporter {
       author: 'Trust by Equityworld',
     );
 
+    // Logo watermark. Kalau gagal dimuat, watermark tetap tampil tanpa logo.
+    pw.MemoryImage? logo;
+    try {
+      final data = await rootBundle.load(WatermarkConfig.logoAsset);
+      logo = pw.MemoryImage(data.buffer.asUint8List());
+    } catch (_) {
+      logo = null;
+    }
+
     final tanggalData = data.map((d) => d.tanggal).toList()..sort();
     final rentang = tanggalData.isEmpty
         ? '-'
@@ -32,9 +43,10 @@ class HistoriPdfExporter {
 
     doc.addPage(
       pw.MultiPage(
-        pageTheme: const pw.PageTheme(
+        pageTheme: pw.PageTheme(
           pageFormat: PdfPageFormat.a4,
-          margin: pw.EdgeInsets.fromLTRB(36, 40, 36, 40),
+          margin: const pw.EdgeInsets.fromLTRB(36, 40, 36, 40),
+          buildForeground: (_) => _watermark(logo),
         ),
         header: (_) => pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -104,6 +116,53 @@ class HistoriPdfExporter {
       [XFile(file.path, mimeType: 'application/pdf')],
       subject: 'Data Historis $namaProduk',
       text: 'Data Historis $namaProduk - Trust by Equityworld',
+    );
+  }
+
+    /// Watermark logo + teks yang berulang dan miring di setiap halaman.
+  static pw.Widget _watermark(pw.MemoryImage? logo) {
+    const tileW = 200.0;
+    const tileH = 120.0;
+    const cols = 4;
+    const rows = 8;
+
+    final tiles = <pw.Widget>[];
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        final dx = c * tileW - 40 + (r.isOdd ? tileW / 2 : 0);
+        tiles.add(
+          pw.Positioned(
+            left: dx,
+            top: r * tileH,
+            child: pw.Transform.rotate(
+              angle: -0.5,
+              child: pw.Row(
+                mainAxisSize: pw.MainAxisSize.min,
+                children: [
+                  if (logo != null) pw.Image(logo, height: 26),
+                  if (logo != null) pw.SizedBox(width: 8),
+                  pw.Text(
+                    WatermarkConfig.teks,
+                    style: pw.TextStyle(
+                      fontSize: 15,
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColors.grey800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+    }
+
+    return pw.FullPage(
+      ignoreMargins: true,
+      child: pw.Opacity(
+        opacity: 0.15,
+        child: pw.Stack(overflow: pw.Overflow.clip, children: tiles),
+      ),
     );
   }
 
