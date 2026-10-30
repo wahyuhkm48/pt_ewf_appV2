@@ -8,7 +8,7 @@ import '../widgets/skeleton.dart';
 import '../widgets/offline_widgets.dart';
 import '../viewmodels/histori_viewmodel.dart';
 import '../models/histori_data_model.dart';
-import '../utils/histori_excel_exporter.dart';
+import '../utils/histori_pdf_exporter.dart';
 
 enum _RangeFilter { all, last7, last30, custom }
 
@@ -144,7 +144,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
     return list;
   }
 
-  Future<void> _unduhExcel() async {
+    Future<void> _unduhPdf() async {
     if (_isExporting) return;
 
     // Data yang sudah difilter dan diurutkan
@@ -172,14 +172,14 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
     setState(() => _isExporting = true);
 
     try {
-      await HistoriExcelExporter.export(
+      await HistoriPdfExporter.export(
         namaProduk: _tabs[_selectedTab],
         data: data,
       );
     } catch (_) {
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Gagal membuat file Excel, coba lagi'),
+          content: Text('Gagal membuat file PDF, coba lagi'),
         ),
       );
     } finally {
@@ -232,7 +232,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
                   const Spacer(),
                   _RefreshButton(loading: vm.isLoading, onTap: _refresh),
                   const SizedBox(width: 8),
-                  _buildExcelButton(),
+                  _buildPdfButton(),
                 ],
               ),
               const SizedBox(height: 12),
@@ -264,13 +264,13 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
     );
   }
 
-  Widget _buildExcelButton() {
+    Widget _buildPdfButton() {
     return Material(
-      color: AppColors.successBg,
+      color: AppColors.primaryTint,
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: _isExporting ? null : _unduhExcel,
+        onTap: _isExporting ? null : _unduhPdf,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
@@ -280,13 +280,13 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
                   ? const SizedBox(
                       width: 16,
                       height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.success),
+                      child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
                     )
-                  : const Icon(Icons.file_download_outlined, size: 16, color: AppColors.success),
+                  : const Icon(Icons.picture_as_pdf_outlined, size: 16, color: AppColors.primary),
               const SizedBox(width: 6),
               Text(
-                _isExporting ? 'Menyiapkan...' : 'Excel',
-                style: AppTextStyles.labelMd(color: AppColors.success),
+                _isExporting ? 'Menyiapkan...' : 'PDF',
+                style: AppTextStyles.labelMd(color: AppColors.primary),
               ),
             ],
           ),
