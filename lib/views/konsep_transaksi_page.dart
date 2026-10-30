@@ -14,6 +14,7 @@ import '../widgets/education_sections.dart';
 import '../widgets/exportable_area.dart';
 import '../widgets/offline_widgets.dart';
 import '../widgets/riwayat_button.dart';
+import '../widgets/tradingview_chart.dart';
 import '../utils/pivot_point_levels.dart';
 import '../utils/asset_labels.dart';
 import '../core/connectivity_service.dart';
@@ -50,6 +51,11 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
   NestModel? _manualNestResult;
 
   static const _assetLabels = {'gold': 'Gold', 'nikkei': 'JPK', 'hangseng': 'HKK'};
+  static const _tvSymbols = {
+    'gold': 'Saxo:XAUUSD',
+    'nikkei': 'Vantage:NIKKEI225',
+    'hangseng': 'IG:HANGSENG',
+  };
   static const _months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
   @override
@@ -370,7 +376,30 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
                   }).toList(),
                 ),
               ),
+              const SizedBox(height: 14),
 
+              // Grafik harga produk yang dipilih (TradingView)
+              OnlineGate(
+                compact: true,
+                title: 'Grafik butuh internet',
+                message: 'Grafik harga dimuat dari TradingView. Input manual tetap bisa dipakai.',
+                child: Container(
+                  width: double.infinity,
+                  height: 320,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: AppColors.divider),
+                  ),
+                  child: TradingViewChart(
+                    key: ValueKey(_tvSymbols[_selectedAsset]), // ganti produk = muat ulang grafik
+                    symbol: _tvSymbols[_selectedAsset]!,
+                    interval: 'D',
+                    height: 320,
+                  ),
+                ),
+              ),
               const SizedBox(height: 14),
 
               // Sumber Data: Otomatis (dari pasar) / Manual (input sendiri)

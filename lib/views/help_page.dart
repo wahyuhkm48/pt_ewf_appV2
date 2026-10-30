@@ -37,15 +37,15 @@ class HelpPage extends StatelessWidget {
     (
       Icons.history_rounded,
       'Bagaimana cara melihat riwayat perhitungan?',
-      'Buka menu History di bar bawah, lalu pilih tab Pivot Point, Nest, atau Emas Fisik. '
-          'Riwayat terbaru juga tampil di halaman Home, dan view all akan membawamu ke History.',
+      'Buka halaman Pivot Point, Nest, atau Emas Fisik, lalu ketuk tombol Riwayat di pojok kanan atas. '
+          'Untuk Pivot Point dan Nest, kamu bisa menyaring riwayat berdasarkan produk.',
     ),
     (
       Icons.show_chart_rounded,
       'Bagaimana cara melihat grafik dan data historis?',
-      'Buka menu Chart, lalu pilih Gold, JPK (Nikkei), atau HKK (Hang Seng). Di bawah grafik '
-          'ada tabel Data Historis 90 hari terakhir berisi Open, High, Low, dan Close, '
-          'dengan tombol Excel untuk mengunduhnya.',
+      'Grafik harga tampil di halaman Pivot Point dan Nest, tepat di bawah pilihan Produk. '
+          'Data Historis (Open, High, Low, Close) ada di menu Histori, lengkap dengan filter '
+          'tanggal, urutan, dan tombol Excel untuk mengunduhnya.',
     ),
     (
       Icons.newspaper_rounded,

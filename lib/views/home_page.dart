@@ -217,11 +217,11 @@ class _WelcomeCardState extends State<_WelcomeCard> {
   static const _messages = <(String, String, String)>[
     ('assets/images/welcome/welcome_hello.webp', 'Selamat datang!', 'Pantau pasar dan hitung peluangmu dengan lebih tenang.'),
     ('assets/images/welcome/welcome_pivot.webp', 'Siap menghitung?', 'Coba Pivot Point untuk melihat level support dan resistance.'),
-    ('assets/images/welcome/welcome_chart.webp', 'Pantau grafik', 'Lihat Gold, Nikkei, dan Hang Seng di menu Chart.'),
+    ('assets/images/welcome/welcome_chart.webp', 'Pantau grafik', 'Lihat grafik Gold, Nikkei, dan Hang Seng di halaman Pivot Point dan Nest.'),
     ('assets/images/welcome/welcome_emas.webp', 'Hitung emas fisik', 'Cek selisih harga dan estimasi keuntunganmu.'),
     ('assets/images/welcome/welcome_nest.webp', 'Sinyal harian', 'Bandingkan Close kemarin dan Open hari ini lewat Nest.'),
     ('assets/images/welcome/welcome_news.webp', 'Kabar terbaru', 'Baca berita pasar dari Bloomberg, CNBC, dan Reuters.'),
-    ('assets/images/welcome/welcome_history.webp', 'Riwayat tersimpan', 'Lihat kembali hasil perhitunganmu di menu History.'),
+    ('assets/images/welcome/welcome_history.webp', 'Riwayat tersimpan', 'Lihat kembali hasil perhitunganmu lewat tombol Riwayat di tiap kalkulator.'),
   ];
 
   late int _index = Random().nextInt(_messages.length);

@@ -5,7 +5,6 @@ import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/skeleton.dart';
-import '../widgets/tradingview_chart.dart';
 import '../widgets/offline_widgets.dart';
 import '../viewmodels/histori_viewmodel.dart';
 import '../models/histori_data_model.dart';
@@ -27,9 +26,7 @@ class ChartPage extends StatefulWidget {
 class _ChartPageState extends State<ChartPage> {
   int _selectedTab = 0; // 0 = Gold, 1 = JPK, 2 = HKK
   final List<String> _tabs = const ['Gold', 'JPK', 'HKK'];
-  final List<String> _tvSymbols = const ['Saxo:XAUUSD', 'Vantage:NIKKEI225', 'IG:HANGSENG'];
   bool _isExporting = false;
-  int _chartVersion = 0; // dinaikkan setiap refresh -> key berubah -> TradingView dimuat ulang
 
   // ===== Filter tabel Data Historis =====
   final ScrollController _scroll = ScrollController();
@@ -75,12 +72,11 @@ class _ChartPageState extends State<ChartPage> {
     context.read<HistoriViewModel>().loadTab(index);
   }
 
-  /// Muat ulang chart + tabel untuk tab aktif, lalu kembali ke tampilan default
+  /// Muat ulang tabel untuk tab aktif, lalu kembali ke tampilan default
   /// (filter dan urutan direset, layar digulung ke atas).
   Future<void> _refresh() async {
     final vm = context.read<HistoriViewModel>();
     setState(() {
-      _chartVersion++;
       _resetFilters();
     });
     if (_scroll.hasClients && _scroll.offset > 0) {
@@ -178,12 +174,9 @@ class _ChartPageState extends State<ChartPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: OnlineGate(
-        title: 'Chart butuh internet',
-        message: 'Chart TradingView dan data historis dimuat dari internet.',
-        onReconnect: () {
-          setState(() => _chartVersion++); // muat ulang TradingView
-          context.read<HistoriViewModel>().loadTab(_selectedTab, forceRefresh: true);
-        },
+        title: 'Data historis butuh internet',
+        message: 'Data historis dimuat dari server, jadi butuh internet.',
+        onReconnect: () => context.read<HistoriViewModel>().loadTab(_selectedTab, forceRefresh: true),
         child: _buildOnline(context),
       ),
     );
@@ -204,32 +197,15 @@ class _ChartPageState extends State<ChartPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Chart', style: AppTextStyles.h1()),
+              Text('Data Historis', style: AppTextStyles.h1()),
               const SizedBox(height: 16),
               _buildTabs(),
-              const SizedBox(height: 16),
-              Container(
-                width: double.infinity,
-                height: 400,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.divider),
-                ),
-                child: TradingViewChart(
-                  key: ValueKey('${_tvSymbols[_selectedTab]}#$_chartVersion'),
-                  symbol: _tvSymbols[_selectedTab],
-                  interval: 'D',
-                  height: 400,
-                ),
-              ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
               // ===== Judul + tombol refresh + Excel =====
               Row(
                 children: [
-                  Text('Data Historis', style: AppTextStyles.h3()),
+                  Text('Data Pasar ${_tabs[_selectedTab]}', style: AppTextStyles.h3()),
                   const Spacer(),
                   _RefreshButton(loading: vm.isLoading, onTap: _refresh),
                   const SizedBox(width: 8),
