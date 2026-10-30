@@ -60,11 +60,6 @@ class PivotPointDetailPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (item.action != null) ...[
-                      ActionBadge(action: item.action!),
-                      const SizedBox(height: 16),
-                    ],
-
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -91,6 +86,12 @@ class PivotPointDetailPage extends StatelessWidget {
                       ),
                       child: Column(children: buildPivotLevelRows(item)),
                     ),
+                    const SizedBox(height: 24),
+
+                    if (item.action != null) ...[
+                      ActionBadge(action: item.action!),
+                      const SizedBox(height: 16),
+                    ],
                   ],
                 ),
               ),

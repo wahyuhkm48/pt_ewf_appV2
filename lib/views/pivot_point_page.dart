@@ -294,24 +294,10 @@ class _PivotPointPageState extends State<PivotPointPage> {
     );
   }
 
-  // Indikator: PP > O = buy, PP < O = sell, PP == O = netral
   List<Widget> _buildResult(PivotPointModel result) {
     return [
       Text('Hasil Pivot Point', style: AppTextStyles.h3(color: AppColors.primary)),
       const SizedBox(height: 12),
-
-      if (result.action != null) ...[
-        ActionBadge(action: result.action!),
-        if (result.open != null) ...[
-          const SizedBox(height: 12),
-          PivotPointWhyCard(
-            action: result.action!,
-            pivotPoint: result.pivotPoint,
-            open: result.open!,
-          ),
-        ],
-        const SizedBox(height: 16),
-      ],
 
       Container(
         padding: const EdgeInsets.all(16),
@@ -339,6 +325,22 @@ class _PivotPointPageState extends State<PivotPointPage> {
         ),
         child: Column(children: buildPivotLevelRows(result)),
       ),
+
+      Text('Indikator Action', style: AppTextStyles.h3(color: AppColors.primary)),
+      const SizedBox(height: 12),
+      // Action + keterangan sekarang di bawah tabel level
+      if (result.action != null) ...[
+        const SizedBox(height: 16),
+        ActionBadge(action: result.action!),
+        if (result.open != null) ...[
+          const SizedBox(height: 12),
+          PivotPointWhyCard(
+            action: result.action!,
+            pivotPoint: result.pivotPoint,
+            open: result.open!,
+          ),
+        ],
+      ],
     ];
   }
 }

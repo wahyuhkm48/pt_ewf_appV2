@@ -234,13 +234,6 @@ class _NestPageState extends State<NestPage> {
       Text('Hasil Nest', style: AppTextStyles.h3(color: AppColors.primary)),
       const SizedBox(height: 12),
 
-      ActionBadge(action: result.action),
-      if (result.open != null) ...[
-        const SizedBox(height: 12),
-        NestWhyCard(action: result.action, close: result.close, open: result.open!),
-      ],
-      const SizedBox(height: 16),
-
       Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -255,6 +248,17 @@ class _NestPageState extends State<NestPage> {
           ],
         ),
       ),
+
+      const SizedBox(height: 16),
+
+      Text('Indikator Action', style: AppTextStyles.h3(color: AppColors.primary)),
+      const SizedBox(height: 12),
+      
+      ActionBadge(action: result.action),
+      if (result.open != null) ...[
+        const SizedBox(height: 12),
+        NestWhyCard(action: result.action, close: result.close, open: result.open!),
+      ],
     ];
   }
 }

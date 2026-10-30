@@ -58,9 +58,6 @@ class NestDetailPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ActionBadge(action: item.action),
-                    const SizedBox(height: 16),
-
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -75,6 +72,10 @@ class NestDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
+
+                    const SizedBox(height: 16),
+                    ActionBadge(action: item.action),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
