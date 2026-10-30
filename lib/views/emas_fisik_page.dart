@@ -8,7 +8,9 @@ import '../viewmodels/emas_fisik_viewmodel.dart';
 import '../widgets/education_sections.dart';
 import '../widgets/exportable_area.dart';
 import '../widgets/offline_widgets.dart';
+import '../widgets/riwayat_button.dart';
 import '../core/connectivity_service.dart';
+import 'riwayat_kalkulator_page.dart';
 
 class EmasFisikPage extends StatefulWidget {
   const EmasFisikPage({super.key});
@@ -64,6 +66,14 @@ class _EmasFisikPageState extends State<EmasFisikPage> {
     return value.toStringAsFixed(decimals).replaceAll('.', ',');
   }
 
+  void _bukaRiwayat() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const RiwayatKalkulatorPage(jenis: RiwayatJenis.emasFisik),
+      ),
+    );
+  }
+
   void _hitung() {
     final vm = context.read<EmasFisikViewModel>();
     vm.hitung(
@@ -117,6 +127,10 @@ class _EmasFisikPageState extends State<EmasFisikPage> {
                         Text('Emas Fisik',
                             style: AppTextStyles.h3()),
                       ],
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: RiwayatButton(onTap: _bukaRiwayat),
                     ),
                   ],
                 ),

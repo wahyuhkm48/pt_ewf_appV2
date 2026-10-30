@@ -13,15 +13,19 @@ import '../widgets/mini_stat.dart';
 import '../widgets/education_sections.dart';
 import '../widgets/exportable_area.dart';
 import '../widgets/offline_widgets.dart';
+import '../widgets/riwayat_button.dart';
 import '../utils/pivot_point_levels.dart';
 import '../utils/asset_labels.dart';
 import '../core/connectivity_service.dart';
+import 'riwayat_kalkulator_page.dart';
 
-enum _KalkulatorMode { pivotPoint, nest }
+enum KalkulatorMode { pivotPoint, nest }
 enum _SumberData { otomatis, manual }
 
 class KonsepTransaksiPage extends StatefulWidget {
-  const KonsepTransaksiPage({super.key});
+  /// Menentukan halaman ini menghitung Pivot Point atau Nest.
+  final KalkulatorMode mode;
+  const KonsepTransaksiPage({super.key, required this.mode});
 
   @override
   State<KonsepTransaksiPage> createState() => _KonsepTransaksiPageState();
@@ -30,7 +34,7 @@ class KonsepTransaksiPage extends StatefulWidget {
 class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
   DateTime _selectedDate = DateTime.now();
   String _selectedAsset = 'gold'; // gold | nikkei | hangseng
-  _KalkulatorMode _mode = _KalkulatorMode.pivotPoint; // default: Pivot Point
+  KalkulatorMode get _mode => widget.mode;
   _SumberData _sumberData = _SumberData.otomatis;
 
   // ===== Input Manual =====
@@ -78,6 +82,17 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
 
   String _formatNumber(double value) => value.toStringAsFixed(2);
 
+  void _bukaRiwayat() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => RiwayatKalkulatorPage(
+          jenis: _mode == KalkulatorMode.pivotPoint ? RiwayatJenis.pivotPoint : RiwayatJenis.nest,
+          initialAsset: _selectedAsset, // filter awal = produk yang sedang dipilih
+        ),
+      ),
+    );
+  }
+
   Future<void> _pilihTanggal() async {
     final picked = await showDatePicker(
       context: context,
@@ -99,7 +114,7 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
   void _hitung() {
     if (_sumberData == _SumberData.otomatis) {
       if (context.read<ConnectivityService>().isOffline) return;
-      if (_mode == _KalkulatorMode.pivotPoint) {
+      if (_mode == KalkulatorMode.pivotPoint) {
         context.read<PivotPointViewModel>().hitung(asset: _selectedAsset, tanggal: _selectedDate);
       } else {
         context.read<NestViewModel>().hitung(asset: _selectedAsset, tanggal: _selectedDate);
@@ -111,7 +126,7 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
     FocusScope.of(context).unfocus();
     setState(() => _manualError = null);
 
-    if (_mode == _KalkulatorMode.pivotPoint) {
+    if (_mode == KalkulatorMode.pivotPoint) {
       final high = _parseInput(_highCtrl.text);
       final low = _parseInput(_lowCtrl.text);
       final close = _parseInput(_closeCtrl.text);
@@ -258,10 +273,10 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
     final isOtomatis = _sumberData == _SumberData.otomatis;
     final butuhInternet = isOtomatis && !online; // mode pasar tidak bisa saat offline
     final isLoading = isOtomatis
-        ? (_mode == _KalkulatorMode.pivotPoint ? pivotVm.isLoading : nestVm.isLoading)
+        ? (_mode == KalkulatorMode.pivotPoint ? pivotVm.isLoading : nestVm.isLoading)
         : false;
     final errorMessage = isOtomatis
-        ? (_mode == _KalkulatorMode.pivotPoint ? pivotVm.errorMessage : nestVm.errorMessage)
+        ? (_mode == KalkulatorMode.pivotPoint ? pivotVm.errorMessage : nestVm.errorMessage)
         : _manualError;
     final pivotResult = isOtomatis ? pivotVm.result : _manualPivotResult;
     final nestResult = isOtomatis ? nestVm.result : _manualNestResult;
@@ -291,10 +306,23 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset('assets/images/icons/pivot_point.png', width: 28, height: 28),
+                        Image.asset(
+                          _mode == KalkulatorMode.pivotPoint
+                              ? 'assets/images/welcome/pivot_point.webp'
+                              : 'assets/images/welcome/nest.webp',
+                          width: 28,
+                          height: 28,
+                        ),
                         const SizedBox(width: 10),
-                        Text('Konsep Transaksi', style: AppTextStyles.h3()),
+                        Text(
+                          _mode == KalkulatorMode.pivotPoint ? 'Pivot Point' : 'Nest',
+                          style: AppTextStyles.h3(),
+                        ),
                       ],
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: RiwayatButton(onTap: _bukaRiwayat),
                     ),
                   ],
                 ),
@@ -304,23 +332,29 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
               Text('Data Pasar (Input)',
                   style: AppTextStyles.h3(color: AppColors.primary)),
               const SizedBox(height: 4),
-              Text('Pilih mode kalkulasi, tanggal & produk',
+              Text('Pilih Produk, sumber data, dan tanggal',
                   style: AppTextStyles.bodySm()),
               const SizedBox(height: 16),
 
-              // Mode: Pivot Point / Nest
-              Text('Mode Kalkulasi', style: AppTextStyles.labelMd(),),
+
+              // Penjelasan konsep (berubah sesuai mode)
+              _mode == KalkulatorMode.pivotPoint
+                  ? const PivotPointExplainer()
+                  : const NestExplainer(),
+              const SizedBox(height: 14),
+
+              // Produk
+              Text('Produk', style: AppTextStyles.labelMd(),),
               const SizedBox(height: 6),
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(30)),
                 child: Row(
-                  children: _KalkulatorMode.values.map((mode) {
-                    final selected = _mode == mode;
-                    final label = mode == _KalkulatorMode.pivotPoint ? 'Pivot Point' : 'Nest';
+                  children: _assetLabels.entries.map((entry) {
+                    final selected = _selectedAsset == entry.key;
                     return Expanded(
                       child: GestureDetector(
-                        onTap: () => setState(() => _mode = mode),
+                        onTap: () => setState(() => _selectedAsset = entry.key),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -329,19 +363,14 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
                             borderRadius: BorderRadius.circular(26),
                           ),
                           alignment: Alignment.center,
-                          child: Text(label, style: AppTextStyles.labelMd(color: selected ? Colors.white : AppColors.textSecondary)),
+                          child: Text(entry.value, style: AppTextStyles.labelMd(color: selected ? Colors.white : AppColors.textSecondary)),
                         ),
                       ),
                     );
                   }).toList(),
                 ),
               ),
-              const SizedBox(height: 14),
 
-              // Penjelasan konsep (berubah sesuai mode)
-              _mode == _KalkulatorMode.pivotPoint
-                  ? const PivotPointExplainer()
-                  : const NestExplainer(),
               const SizedBox(height: 14),
 
               // Sumber Data: Otomatis (dari pasar) / Manual (input sendiri)
@@ -418,7 +447,7 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
                   ),
                 ),
                 const SizedBox(height: 14),
-              ] else if (_mode == _KalkulatorMode.pivotPoint) ...[
+              ] else if (_mode == KalkulatorMode.pivotPoint) ...[
                 // Input manual Pivot Point: High, Low, Close (+ Open opsional)
                 Row(
                   children: [
@@ -466,34 +495,7 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
                 const SizedBox(height: 14),
               ],
 
-              // Produk
-              Text('Produk', style: AppTextStyles.labelMd(),),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(30)),
-                child: Row(
-                  children: _assetLabels.entries.map((entry) {
-                    final selected = _selectedAsset == entry.key;
-                    return Expanded(
-                      child: GestureDetector(
-                        onTap: () => setState(() => _selectedAsset = entry.key),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: selected ? AppColors.primary : Colors.transparent,
-                            borderRadius: BorderRadius.circular(26),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(entry.value, style: AppTextStyles.labelMd(color: selected ? Colors.white : AppColors.textSecondary)),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 28),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
@@ -518,7 +520,7 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
                   child: Text(errorMessage, style: AppTextStyles.bodySm(color: AppColors.danger)),
                 ),
 
-              if (_mode == _KalkulatorMode.pivotPoint && pivotResult != null) ...[
+              if (_mode == KalkulatorMode.pivotPoint && pivotResult != null) ...[
                 const SizedBox(height: 28),
                 ExportableArea(
                   namaFile: 'pivot_${pivotResult.asset ?? 'manual'}',
@@ -530,7 +532,7 @@ class _KonsepTransaksiPageState extends State<KonsepTransaksiPage> {
                   ),
                 ),
               ],
-              if (_mode == _KalkulatorMode.nest && nestResult != null) ...[
+              if (_mode == KalkulatorMode.nest && nestResult != null) ...[
                 const SizedBox(height: 28),
                 ExportableArea(
                   namaFile: 'nest_${nestResult.asset}',

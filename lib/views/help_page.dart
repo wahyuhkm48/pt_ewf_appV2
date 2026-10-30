@@ -9,9 +9,8 @@ class HelpPage extends StatelessWidget {
     (
       Icons.calculate_outlined,
       'Bagaimana cara menghitung Pivot Point atau Nest?',
-      'Ketuk tombol kalkulator oranye di menu bawah, lalu pilih Pivot Point. '
-          'Pada halaman Konsep Transaksi, pilih Mode Kalkulasi (Pivot Point atau Nest), '
-          'pilih Sumber Data, lalu ketuk Hitung.',
+      'Buka menu Kalkulator, ketuk Konsep Transaksi, lalu pilih Pivot Point atau Nest. '
+          'Pilih Sumber Data (Ambil dari Pasar atau Input Manual), lalu ketuk Hitung.',
     ),
     (
       Icons.analytics_outlined,
@@ -31,7 +30,7 @@ class HelpPage extends StatelessWidget {
     (
       Icons.savings_outlined,
       'Bagaimana cara menghitung Emas Fisik?',
-      'Ketuk tombol kalkulator, pilih Emas Fisik, lalu isi Harga Beli dan Harga Jual '
+      'Buka menu Kalkulator, pilih Emas Fisik, lalu isi Harga Beli dan Harga Jual '
           '(USD per toz), Kurs USD ke IDR (terisi otomatis dengan kurs terkini), dan Modal dalam rupiah. '
           'Hasilnya berisi HHB, HHJ, selisih, berat emas dalam gram, dan keuntungan.',
     ),
