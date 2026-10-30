@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../widgets/custom_bottom_nav.dart';
 import 'home_page.dart';
-import 'chart_page.dart';
+import 'data_historis_page.dart';
 import 'settings_page.dart';
 import 'kalkulator_page.dart';
 
@@ -32,7 +32,7 @@ class _MainShellState extends State<MainShell> {
   Widget build(BuildContext context) {
     final pages = [
       const HomePage(),
-      const ChartPage(),
+      const DataHistoriPage(),
       KalkulatorPage(onOpen: _openCalculator),
       const SettingsPage(),
     ];

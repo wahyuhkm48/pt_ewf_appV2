@@ -16,14 +16,14 @@ const _kBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 
 String _fmtTanggal(DateTime d) => '${d.day} ${_kBulan[d.month - 1]} ${d.year}';
 String _fmtPendek(DateTime d) => '${d.day} ${_kBulan[d.month - 1]}';
 
-class ChartPage extends StatefulWidget {
-  const ChartPage({super.key});
+class DataHistoriPage extends StatefulWidget {
+  const DataHistoriPage({super.key});
 
   @override
-  State<ChartPage> createState() => _ChartPageState();
+  State<DataHistoriPage> createState() => _DataHistoriPageState();
 }
 
-class _ChartPageState extends State<ChartPage> {
+class _DataHistoriPageState extends State<DataHistoriPage> {
   int _selectedTab = 0; // 0 = Gold, 1 = JPK, 2 = HKK
   final List<String> _tabs = const ['Gold', 'JPK', 'HKK'];
   bool _isExporting = false;

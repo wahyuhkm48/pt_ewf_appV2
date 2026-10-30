@@ -19,7 +19,6 @@ import 'services/nest_service.dart';
 import 'viewmodels/nest_viewmodel.dart';
 import 'views/splash_page.dart';
 import 'views/login_page.dart';
-import 'viewmodels/recent_history_viewmodel.dart';
 import 'widgets/offline_widgets.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -66,7 +65,6 @@ void main() {
         ChangeNotifierProvider(create: (_) => EmasFisikViewModel(EmasFisikService(apiClient), MarketDataService(apiClient))),
         ChangeNotifierProvider(create: (_) => HistoriViewModel(HistoriService(apiClient))),
         ChangeNotifierProvider(create: (_) => NewsViewModel(NewsService(apiClient))),
-        ChangeNotifierProvider(create: (_) => RecentHistoryViewModel(PivotPointService(apiClient), NestService(apiClient), EmasFisikService(apiClient))),
       ],
       child: const MyApp(),
     ),
