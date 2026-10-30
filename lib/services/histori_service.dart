@@ -7,17 +7,17 @@ class HistoriService {
   HistoriService(this._client);
 
   Future<List<HistoriDataModel>> gold() async {
-    final res = await _client.get('/histori/gold');
+    final res = await _client.get('/histori/gold?limit=10');
     return (res['data'] ?? res).map<HistoriDataModel>((e) => HistoriDataModel.fromJson(e)).toList();
   }
 
   Future<List<HistoriDataModel>> nikkei() async {
-    final res = await _client.get('/histori/nikkei');
+    final res = await _client.get('/histori/nikkei?limit=10');
     return (res['data'] ?? res).map<HistoriDataModel>((e) => HistoriDataModel.fromJson(e)).toList();
   }
 
   Future<List<HistoriDataModel>> hangseng() async {
-    final res = await _client.get('/histori/hangseng');
+    final res = await _client.get('/histori/hangseng?limit=10');
     return (res['data'] ?? res).map<HistoriDataModel>((e) => HistoriDataModel.fromJson(e)).toList();
   }
 }

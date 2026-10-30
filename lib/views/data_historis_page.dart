@@ -1,4 +1,4 @@
-// views/chart_screen.dart
+// views/data_historis_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
@@ -147,26 +147,45 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
   Future<void> _unduhExcel() async {
     if (_isExporting) return;
 
-    // Yang diunduh = yang sedang tampil (sudah terfilter dan terurut)
-    final data = _applyFilter(context.read<HistoriViewModel>().forTab(_selectedTab));
+    // Data yang sudah difilter dan diurutkan
+    final filteredAll = _applyFilter(
+      context.read<HistoriViewModel>().forTab(_selectedTab),
+    );
+
+    // Jika tidak sedang difilter (Semua), ambil maksimal 10 data.
+    // Jika filter aktif, export semua hasil filter.
+    final data = !_isFiltered
+        ? filteredAll.take(10).toList()
+        : filteredAll;
+
     final messenger = ScaffoldMessenger.of(context);
 
     if (data.isEmpty) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Belum ada data untuk diunduh')),
+        const SnackBar(
+          content: Text('Belum ada data untuk diunduh'),
+        ),
       );
       return;
     }
 
     setState(() => _isExporting = true);
+
     try {
-      await HistoriExcelExporter.export(namaProduk: _tabs[_selectedTab], data: data);
+      await HistoriExcelExporter.export(
+        namaProduk: _tabs[_selectedTab],
+        data: data,
+      );
     } catch (_) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Gagal membuat file Excel, coba lagi')),
+        const SnackBar(
+          content: Text('Gagal membuat file Excel, coba lagi'),
+        ),
       );
     } finally {
-      if (mounted) setState(() => _isExporting = false);
+      if (mounted) {
+        setState(() => _isExporting = false);
+      }
     }
   }
 
@@ -185,7 +204,11 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
   Widget _buildOnline(BuildContext context) {
     final vm = context.watch<HistoriViewModel>();
     final all = vm.forTab(_selectedTab);
-    final filtered = _applyFilter(all);
+    // Filter semua data terlebih dahulu
+    final filteredAll = _applyFilter(all);
+
+    // Batasi tampilan tabel maksimal 10 data
+    final filtered = filteredAll.take(10).toList();
 
     return SafeArea(
       child: RefreshIndicator(
