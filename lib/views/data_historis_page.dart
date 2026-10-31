@@ -347,7 +347,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.surface,
               borderRadius: BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14)),
             ),
@@ -546,7 +546,7 @@ class _HistoryRow extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-      decoration: const BoxDecoration(border: Border(top: BorderSide(color: AppColors.divider, width: 0.5))),
+      decoration: BoxDecoration(border: Border(top: BorderSide(color: AppColors.divider, width: 0.5))),
       child: Row(
         children: [
           _dateCell(_fmtTanggal(data.tanggal), style),

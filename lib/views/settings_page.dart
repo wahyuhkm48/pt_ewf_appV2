@@ -14,6 +14,7 @@ import 'notification_page.dart';
 import 'language_page.dart';
 import 'help_page.dart';
 import 'about_page.dart';
+import 'tampilan_page.dart';
 
 
 class SettingsPage extends StatelessWidget {
@@ -110,6 +111,15 @@ class SettingsPage extends StatelessWidget {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const LanguagePage()),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  _SettingTile(
+                    icon: Icons.dark_mode_outlined,
+                    label: 'Tampilan',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const TampilanPage()),
                     ),
                   ),
                   const SizedBox(height: 12),

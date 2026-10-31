@@ -24,7 +24,7 @@ class LevelRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
       decoration: BoxDecoration(
-        border: isFirst ? null : const Border(top: BorderSide(color: AppColors.divider, width: 0.5)),
+        border: isFirst ? null : Border(top: BorderSide(color: AppColors.divider, width: 0.5)),
       ),
       child: Row(
         children: [

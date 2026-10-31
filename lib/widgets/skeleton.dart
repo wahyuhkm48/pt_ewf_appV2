@@ -40,7 +40,7 @@ class _SkeletonShimmerState extends State<SkeletonShimmer>
         return ShaderMask(
           blendMode: BlendMode.srcATop,
           shaderCallback: (bounds) => LinearGradient(
-            colors: const [
+            colors: [
               AppColors.skeletonBase,
               AppColors.skeletonHighlight,
               AppColors.skeletonBase,

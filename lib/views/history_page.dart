@@ -118,7 +118,7 @@ class _HistoryPageState extends State<HistoryPage> {
               scrollDirection: Axis.horizontal,
               child: _buildTabSwitcher(),
             ),
-            const Divider(color: AppColors.divider, height: 32),
+            Divider(color: AppColors.divider, height: 32),
             Expanded(
               child: OnlineGate(
                 title: 'Riwayat butuh internet',

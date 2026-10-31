@@ -68,7 +68,7 @@ class _WatermarkTile extends StatelessWidget {
       children: [
         Image.asset(WatermarkConfig.logoAsset, height: 28),
         const SizedBox(width: 8),
-        const Text(
+        Text(
           WatermarkConfig.teks,
           style: TextStyle(
             fontSize: 14,

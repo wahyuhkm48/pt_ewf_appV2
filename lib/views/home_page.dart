@@ -85,8 +85,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                     width: 44, height: 44,
-                    decoration: const BoxDecoration(color: AppColors.surface, shape: BoxShape.circle),
-                    child: const Icon(Icons.notifications_none_rounded, color: AppColors.textPrimary),
+                    decoration: BoxDecoration(color: AppColors.surface, shape: BoxShape.circle),
+                    child: Icon(Icons.notifications_none_rounded, color: AppColors.textPrimary),
                   ),
                 ],
               ),
@@ -275,7 +275,7 @@ class _WelcomeCardState extends State<_WelcomeCard> {
                   m.$1,
                   fit: BoxFit.cover,
                   gaplessPlayback: true,
-                  errorBuilder: (context, error, stackTrace) => const ColoredBox(
+                  errorBuilder: (context, error, stackTrace) => ColoredBox(
                     color: AppColors.primarySoft,
                     child: Center(
                       child: Icon(Icons.image_not_supported_outlined, color: AppColors.primaryDark),
@@ -333,7 +333,7 @@ class _AboutAppSection extends StatelessWidget {
           style: AppTextStyles.bodyMd().copyWith(height: 1.45),
         ),
         const SizedBox(height: 16),
-        const _FeaturePair(
+        _FeaturePair(
           left: _FeatureTile(
             iconAsset: 'assets/images/welcome/pivot_point.webp',
             title: 'Pivot Point',
@@ -350,7 +350,7 @@ class _AboutAppSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        const _FeaturePair(
+        _FeaturePair(
           left: _FeatureTile(
             iconAsset: 'assets/images/welcome/emas_fisik.webp',
             title: 'Emas Fisik',
@@ -377,7 +377,7 @@ class _AboutAppSection extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.wifi_off_rounded, size: 20, color: AppColors.textSecondary),
+              Icon(Icons.wifi_off_rounded, size: 20, color: AppColors.textSecondary),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(

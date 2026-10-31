@@ -117,7 +117,7 @@ class _LanguagePageState extends State<LanguagePage> {
             // ================= SAVE BUTTON =================
             Container(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
                   top: BorderSide(

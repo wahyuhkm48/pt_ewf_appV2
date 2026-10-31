@@ -111,7 +111,7 @@ class AboutPage extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 24),
-                    const Divider(color: AppColors.divider),
+                    Divider(color: AppColors.divider),
                     const SizedBox(height: 20),
 
                     // ===== Copyright =====

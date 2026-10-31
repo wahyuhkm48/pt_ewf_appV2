@@ -45,7 +45,7 @@ class _HotNewsPageState extends State<HotNewsPage> {
             children: [
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+                icon: Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
                 padding: EdgeInsets.zero,
                 alignment: Alignment.centerLeft,
               ),

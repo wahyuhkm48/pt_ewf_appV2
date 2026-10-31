@@ -81,7 +81,7 @@ class KalkulatorHeader extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: IconButton(
               onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+              icon: Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
               padding: EdgeInsets.zero,
             ),
           ),
@@ -276,7 +276,7 @@ class KalkulatorTanggalField extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(formatTanggalKalkulator(tanggal), style: AppTextStyles.labelBase()),
-                const Icon(Icons.calendar_today_outlined, size: 18, color: AppColors.textSecondary),
+                Icon(Icons.calendar_today_outlined, size: 18, color: AppColors.textSecondary),
               ],
             ),
           ),

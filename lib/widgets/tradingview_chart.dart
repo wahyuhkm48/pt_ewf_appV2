@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../theme/app_colors.dart';
 
 class TradingViewChart extends StatefulWidget {
   final String symbol;   // contoh: 'OANDA:XAUUSD'
@@ -19,24 +20,30 @@ class TradingViewChart extends StatefulWidget {
 
 class _TradingViewChartState extends State<TradingViewChart> {
   late final WebViewController _controller;
+  late bool _dark;
 
   @override
   void initState() {
     super.initState();
-        _controller = WebViewController()
+    _dark = AppColors.isDark;
+    _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.transparent)
       ..enableZoom(false)
       ..loadHtmlString(
         _buildHtml(widget.symbol, widget.interval),
         baseUrl: 'https://www.tradingview.com',
-      );
+    );
   }
 
   @override
   void didUpdateWidget(covariant TradingViewChart oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.symbol != widget.symbol || oldWidget.interval != widget.interval) {
+    final modeBerubah = _dark != AppColors.isDark;
+    if (oldWidget.symbol != widget.symbol ||
+        oldWidget.interval != widget.interval ||
+        modeBerubah) {
+      _dark = AppColors.isDark;
       _controller.loadHtmlString(
         _buildHtml(widget.symbol, widget.interval),
         baseUrl: 'https://www.tradingview.com',
@@ -46,13 +53,16 @@ class _TradingViewChartState extends State<TradingViewChart> {
 
   String _buildHtml(String symbol, String interval) {
     final chartHeight = widget.height.toInt();
+    final bg = _dark ? '#121212' : '#ffffff';
+    final tema = _dark ? 'dark' : 'light';
+    final grid = _dark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(46, 46, 46, 0.2)';
     return '''
 <!DOCTYPE html>
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body { margin:0; padding:0; background:#ffffff; }
+    html, body { margin:0; padding:0; background:$bg; }
     .tradingview-widget-container {
       width: 100%;
       height: ${chartHeight}px;
@@ -86,10 +96,10 @@ class _TradingViewChartState extends State<TradingViewChart> {
       "save_image": false,
       "style": "1",
       "symbol": "$symbol",
-      "theme": "light",
+      "theme": "$tema",
       "timezone": "Etc/UTC",
-      "backgroundColor": "#ffffff",
-      "gridColor": "rgba(46, 46, 46, 0.2)",
+      "backgroundColor": "$bg",
+      "gridColor": "$grid",
       "watchlist": [],
       "withdateranges": false,
       "compareSymbols": [],

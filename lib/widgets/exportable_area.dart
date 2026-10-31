@@ -86,7 +86,7 @@ class _ExportableAreaState extends State<ExportableArea> {
           Text(widget.subjudul!, style: AppTextStyles.bodySm(color: AppColors.textSecondary)),
         ],
         const SizedBox(height: 12),
-        const Divider(color: AppColors.divider, height: 1),
+        Divider(color: AppColors.divider, height: 1),
         const SizedBox(height: 16),
       ];
 
@@ -94,7 +94,7 @@ class _ExportableAreaState extends State<ExportableArea> {
     final now = DateTime.now();
     return [
       const SizedBox(height: 16),
-      const Divider(color: AppColors.divider, height: 1),
+      Divider(color: AppColors.divider, height: 1),
       const SizedBox(height: 8),
       Text(
         'Dibuat ${formatTanggalIndo(now)} ${_dua(now.hour)}:${_dua(now.minute)} • Trust by Equityworld',

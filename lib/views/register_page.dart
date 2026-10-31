@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Positioned(
                 top: -40, left: -60,
-                child: Container(width: 220, height: 220, decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle)),
+                child: Container(width: 220, height: 220, decoration: BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle)),
               ),
               Positioned(
                 top: 30, left: 150,
@@ -96,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               Positioned(
                 bottom: 40, right: 70,
-                child: Container(width: 50, height: 50, decoration: const BoxDecoration(color: AppColors.secondarySoft, shape: BoxShape.circle)),
+                child: Container(width: 50, height: 50, decoration: BoxDecoration(color: AppColors.secondarySoft, shape: BoxShape.circle)),
               ),
 
               SingleChildScrollView(

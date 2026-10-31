@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'core/api_client.dart';
 import 'core/connectivity_service.dart';
+import 'core/theme_controller.dart';
 import 'services/auth_service.dart';
 import 'services/pivot_point_service.dart';
 import 'services/emas_fisik_service.dart';
@@ -20,12 +21,16 @@ import 'viewmodels/nest_viewmodel.dart';
 import 'views/splash_page.dart';
 import 'views/login_page.dart';
 import 'widgets/offline_widgets.dart';
+import 'widgets/theme_rebuilder.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final themeController = ThemeController();
+  await themeController.load();
 
   final connectivity = ConnectivityService()..start();
   final apiClient = ApiClient(connectivity: connectivity);
@@ -65,6 +70,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => EmasFisikViewModel(EmasFisikService(apiClient), MarketDataService(apiClient))),
         ChangeNotifierProvider(create: (_) => HistoriViewModel(HistoriService(apiClient))),
         ChangeNotifierProvider(create: (_) => NewsViewModel(NewsService(apiClient))),
+        ChangeNotifierProvider.value(value: themeController),
       ],
       child: const MyApp(),
     ),
@@ -76,6 +82,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Dibaca supaya MaterialApp ikut dibangun ulang saat mode berubah
+    context.watch<ThemeController>();
+    final brightness = AppColors.isDark ? Brightness.dark : Brightness.light;
+
     return MaterialApp(
       title: 'Trust by Equityworld',
       debugShowCheckedModeBanner: false,
@@ -83,19 +93,26 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(
         useMaterial3: true,
+        brightness: brightness,
         scaffoldBackgroundColor: AppColors.background,
         dividerColor: AppColors.divider,
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.primary,
+          brightness: brightness,
           primary: AppColors.primary,
           secondary: AppColors.secondary,
           error: AppColors.danger,
           surface: AppColors.background,
         ),
-        textTheme: GoogleFonts.interTextTheme(),
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppColors.background,
+          foregroundColor: AppColors.textPrimary,
+          surfaceTintColor: Colors.transparent,
+        ),
+        textTheme: GoogleFonts.interTextTheme(ThemeData(brightness: brightness).textTheme),
         progressIndicatorTheme: const ProgressIndicatorThemeData(color: AppColors.primary),
       ),
-      builder: (context, child) => OfflineBannerHost(child: child!),
+      builder: (context, child) => ThemeRebuilder(child: OfflineBannerHost(child: child!)),
       home: const SplashPage(),
     );
   }

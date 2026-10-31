@@ -124,8 +124,8 @@ class _OfflineNoticeState extends State<OfflineNotice> {
           children: [
             Container(
               width: 76, height: 76,
-              decoration: const BoxDecoration(color: AppColors.surface, shape: BoxShape.circle),
-              child: const Icon(Icons.wifi_off_rounded, size: 36, color: AppColors.textSecondary),
+              decoration: BoxDecoration(color: AppColors.surface, shape: BoxShape.circle),
+              child: Icon(Icons.wifi_off_rounded, size: 36, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 20),
             Text(widget.title, style: AppTextStyles.h3(), textAlign: TextAlign.center),
@@ -177,7 +177,7 @@ class _OfflineNoticeState extends State<OfflineNotice> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 2),
             child: Icon(Icons.wifi_off_rounded, size: 22, color: AppColors.textSecondary),
           ),

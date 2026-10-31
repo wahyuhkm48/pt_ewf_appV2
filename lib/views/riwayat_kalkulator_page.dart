@@ -137,7 +137,7 @@ class _RiwayatKalkulatorPageState extends State<RiwayatKalkulatorPage> {
                   children: [
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+                      icon: Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
                       padding: EdgeInsets.zero,
                     ),
                     const SizedBox(width: 4),
@@ -151,7 +151,7 @@ class _RiwayatKalkulatorPageState extends State<RiwayatKalkulatorPage> {
                   scrollDirection: Axis.horizontal,
                   child: _buildFilterProduk(),
                 ),
-              const Divider(color: AppColors.divider, height: 28),
+              Divider(color: AppColors.divider, height: 28),
               Expanded(
                 child: OnlineGate(
                   title: 'Riwayat butuh internet',

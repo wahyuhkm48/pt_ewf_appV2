@@ -256,7 +256,7 @@ class _HelpTileState extends State<_HelpTile> {
                   AnimatedRotation(
                     turns: _expanded ? 0.5 : 0,
                     duration: const Duration(milliseconds: 200),
-                    child: const Icon(
+                    child: Icon(
                       Icons.keyboard_arrow_down_rounded,
                       color: AppColors.textSecondary,
                     ),

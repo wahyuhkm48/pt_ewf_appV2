@@ -130,7 +130,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
                     onTap: _uploadingFoto ? null : () => _pilihFoto(auth),
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(color: AppColors.textPrimary, shape: BoxShape.circle),
+                      decoration: BoxDecoration(color: AppColors.textPrimary, shape: BoxShape.circle),
                       child: _uploadingFoto
                           ? const SizedBox(
                               width: 18, height: 18,

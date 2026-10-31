@@ -31,7 +31,7 @@ class _PasswordFieldState extends State<PasswordField> {
       decoration: InputDecoration(
         labelText: widget.label,
         labelStyle: AppTextStyles.bodyMd(),
-        enabledBorder: const UnderlineInputBorder(
+        enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.divider),
         ),
         focusedBorder: const UnderlineInputBorder(

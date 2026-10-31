@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 width: 220,
                 height: 220,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.primarySoft,
                   shape: BoxShape.circle,
                 ),
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 width: 50,
                 height: 50,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.secondarySoft,
                   shape: BoxShape.circle,
                 ),

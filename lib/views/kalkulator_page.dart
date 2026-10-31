@@ -79,7 +79,7 @@ class _KonsepTransaksiCardState extends State<_KonsepTransaksiCard> {
                     width: 56,
                     height: 56,
                     padding: const EdgeInsets.all(14),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.primarySoft,
                       shape: BoxShape.circle,
                     ),
@@ -102,7 +102,7 @@ class _KonsepTransaksiCardState extends State<_KonsepTransaksiCard> {
                   AnimatedRotation(
                     turns: _expanded ? 0.5 : 0,
                     duration: const Duration(milliseconds: 200),
-                    child: const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.textSecondary),
+                    child: Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.textSecondary),
                   ),
                 ],
               ),
@@ -115,7 +115,7 @@ class _KonsepTransaksiCardState extends State<_KonsepTransaksiCard> {
             child: _expanded
                 ? Column(
                     children: [
-                      const Divider(height: 1, color: AppColors.divider),
+                      Divider(height: 1, color: AppColors.divider),
                       _SubItem(
                         iconAsset: 'assets/images/welcome/pivot_point.webp',
                         title: 'Pivot Point',
@@ -172,7 +172,7 @@ class _SubItem extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
+            Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
           ],
         ),
       ),
@@ -209,7 +209,7 @@ class _CalcCard extends StatelessWidget {
                 width: 56,
                 height: 56,
                 padding: const EdgeInsets.all(14),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.primarySoft,
                   shape: BoxShape.circle,
                 ),
@@ -226,7 +226,7 @@ class _CalcCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
+              Icon(Icons.chevron_right_rounded, color: AppColors.textSecondary),
             ],
           ),
         ),
