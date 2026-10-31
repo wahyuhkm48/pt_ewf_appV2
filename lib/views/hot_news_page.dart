@@ -50,7 +50,7 @@ class _HotNewsPageState extends State<HotNewsPage> {
                 alignment: Alignment.centerLeft,
               ),
               const SizedBox(height: 4),
-              Text('Hot News', style: AppTextStyles.h1()),
+              Text('Berita Terkini', style: AppTextStyles.h1()),
               const SizedBox(height: 16),
               Expanded(
                 child: OnlineGate(

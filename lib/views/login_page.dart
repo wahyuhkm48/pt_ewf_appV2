@@ -97,9 +97,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   const SizedBox(height: 190),
-                  Text('Login', style: AppTextStyles.h1()),
+                  Text('Masuk', style: AppTextStyles.h1()),
                   const SizedBox(height: 6),
-                  Text("Welcome back, please login to continue", style: AppTextStyles.bodySm()),
+                  Text("Selamat datang kembali, silakan masuk untuk melanjutkan", style: AppTextStyles.bodySm()),
                   const SizedBox(height: 36),
 
                   // Email
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 16),
                     const OfflineNotice(
                       compact: true,
-                      title: 'Login butuh internet',
+                      title: 'Masuk butuh internet',
                       message: 'Sambungkan ke internet untuk masuk ke akun kamu.',
                     ),
                   ],
@@ -196,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                                 setState(() => _error = vm.errorMessage);
                               }
                             },
-                          child: Text('Login', style: AppTextStyles.labelLg(color: Colors.white)),
+                          child: Text('Masuk', style: AppTextStyles.labelLg(color: Colors.white)),
                           ),
                   ),
                   const SizedBox(height: 16),
@@ -208,11 +208,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: RichText(
                       text: TextSpan(
-                        text: "Don't have an account? ",
+                        text: "Belum punya akun? ",
                         style: AppTextStyles.bodySm(),
                         children: [
                           TextSpan(
-                            text: 'Sign Up',
+                            text: 'Daftar',
                             style: AppTextStyles.labelMd(),
                           ),
                         ],

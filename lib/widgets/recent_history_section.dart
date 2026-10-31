@@ -34,7 +34,7 @@ class RecentHistorySection extends StatelessWidget {
               GestureDetector(
                 onTap: onViewAll,
                 child: Text(
-                  'view all',
+                  'lihat semua',
                   style: AppTextStyles.labelMd(color: AppColors.primary),
                 ),
               ),

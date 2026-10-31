@@ -122,21 +122,20 @@ class WelcomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Welcome',
+                          'Selamat Datang',
                           style: AppTextStyles.h1(color: AppColors.textPrimary)
                               .copyWith(fontWeight: FontWeight.w800),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Login or create an account to continue.',
+                          'Masuk atau buat akun untuk melanjutkan.',
                           textAlign: TextAlign.center,
                           style: AppTextStyles.bodyMd(color: AppColors.textSecondary),
                         ),
                         const Spacer(),
 
-                        // Tombol Login — pill gelap
                         _WelcomeButton(
-                          label: 'Login',
+                          label: 'Masuk',
                           gradientColors: const [AppColors.darkButtonTop, AppColors.darkButtonBottom],
                           textColor: Colors.white,
                           onTap: () => Navigator.of(context).pushReplacement(
@@ -145,9 +144,8 @@ class WelcomePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 14),
 
-                        // Tombol Sign Up — pill biru
                         _WelcomeButton(
-                          label: 'Sign Up',
+                          label: 'Daftar',
                           gradientColors: [AppColors.secondary, AppColors.secondary.withValues(alpha: 0.85)],
                           textColor: Colors.white,
                           onTap: () => Navigator.of(context).pushReplacement(

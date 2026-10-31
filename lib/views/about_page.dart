@@ -7,10 +7,10 @@ class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
   static const _features = <(IconData, String, String)>[
-    (Icons.stacked_line_chart_rounded, 'Pivot Point', 'Hitung titik pivot, level support dan resistance, serta sinyal buy atau sell dari data pasar atau input manual.'),
+    (Icons.stacked_line_chart_rounded, 'Pivot Point', 'Hitung titik pivot, level support dan resistance, serta indikator buy atau sell dari data pasar atau input manual.'),
     (Icons.insights_rounded, 'Nest', 'Sinyal harian dari perbandingan Close kemarin dan Open hari ini.'),
     (Icons.savings_outlined, 'Emas Fisik', 'Hitung selisih harga, berat emas, dan estimasi keuntungan dari harga beli, harga jual, kurs, dan modal.'),
-    (Icons.show_chart_rounded, 'Chart & Data Historis', 'Grafik interaktif Gold, Nikkei (JPK), dan Hang Seng (HKK) dengan data historis Open, High, Low, Close yang bisa diunduh ke Excel.'),
+    (Icons.show_chart_rounded, 'Chart & Data Historis', 'Grafik interaktif Gold, Nikkei (JPK), dan Hang Seng (HKK) dengan data historis Open, High, Low, Close yang bisa diunduh ke Pdf.'),
     (Icons.history_rounded, 'Riwayat', 'Simpan dan lihat kembali hasil perhitungan Pivot Point, Nest, dan Emas Fisik.'),
     (Icons.newspaper_rounded, 'Berita', 'Berita pasar dan ekonomi terbaru dari Bloomberg, CNBC, dan Reuters.'),
   ];
@@ -21,7 +21,7 @@ class AboutPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About Me'),
+        title: const Text('Tentang Saya'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: AppColors.background,

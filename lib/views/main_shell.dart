@@ -53,10 +53,10 @@ class _MainShellState extends State<MainShell> {
               currentIndex: _currentIndex,
               onTap: (i) => setState(() => _currentIndex = i),
               items: const [
-                NavItemData(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Home'),
+                NavItemData(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Beranda'),
                 NavItemData(icon: Icons.assignment_outlined, activeIcon: Icons.assignment_rounded, label: 'Histori'),
                 NavItemData(icon: Icons.calculate_outlined, activeIcon: Icons.calculate_rounded, label: 'Kalkulator'),
-                NavItemData(icon: Icons.settings_outlined, activeIcon: Icons.settings_rounded, label: 'Settings'),
+                NavItemData(icon: Icons.settings_outlined, activeIcon: Icons.settings_rounded, label: 'Pengaturan'),
               ],
             ),
           ),

@@ -16,14 +16,14 @@ class HelpPage extends StatelessWidget {
       Icons.analytics_outlined,
       'Apa bedanya Pivot Point dan Nest?',
       'Pivot Point menghitung titik pivot beserta level resistance (R1 sampai R4) dan '
-          'support (S1 sampai S4) dari High, Low, dan Close, lengkap dengan sinyal buy atau sell. '
+          'support (S1 sampai S4) dari High, Low, dan Close, lengkap dengan indikator buy atau sell. '
           'Nest membandingkan Close kemarin dengan Open hari ini untuk menghasilkan sinyal harian.',
     ),
     (
       Icons.swap_horiz_rounded,
       'Apa itu Ambil dari Pasar dan Input Manual?',
       'Ambil dari Pasar memakai data harga pada tanggal dan produk (Gold, JPK, atau HKK) '
-          'yang kamu pilih, dan hasilnya tersimpan di History. Input Manual membuatmu mengisi '
+          'yang kamu pilih, dan hasilnya tersimpan di riwayat. Input Manual membuatmu mengisi '
           'sendiri angkanya (High, Low, Close, atau Close kemarin dan Open hari ini untuk Nest). '
           'Hasilnya hanya dihitung di aplikasi dan tidak tersimpan.',
     ),
@@ -45,24 +45,24 @@ class HelpPage extends StatelessWidget {
       'Bagaimana cara melihat grafik dan data historis?',
       'Grafik harga tampil di halaman Pivot Point dan Nest, tepat di bawah pilihan Produk. '
           'Data Historis (Open, High, Low, Close) ada di menu Histori, lengkap dengan filter '
-          'tanggal, urutan, dan tombol Excel untuk mengunduhnya.',
+          'tanggal, urutan, dan tombol Pdf untuk mengunduhnya.',
     ),
     (
       Icons.newspaper_rounded,
       'Di mana saya bisa membaca berita pasar?',
-      'Berita terbaru dari Bloomberg, CNBC, dan Reuters tampil di bagian Information pada '
-          'halaman Home. Ketuk view all untuk daftar lengkap, dan tarik layar ke bawah untuk memperbarui.',
+      'Berita terbaru dari Bloomberg, CNBC, dan Reuters tampil di bagian Informasi pada '
+          'halaman Beranda. Ketuk lihat semua untuk daftar lengkap, dan tarik layar ke bawah untuk memperbarui.',
     ),
     (
       Icons.person_outline_rounded,
       'Bagaimana cara mengubah informasi akun saya?',
-      'Buka Settings, lalu Account Information. Nama lengkap, nomor telepon, dan foto profil '
+      'Buka Penggaturan, lalu Informasi Akun. Nama lengkap, nomor telepon, dan foto profil '
           '(dari galeri) bisa diubah. Email dan tanggal bergabung tidak bisa diubah.',
     ),
     (
       Icons.lock_outline_rounded,
       'Bagaimana cara mengganti password?',
-      'Buka Settings, lalu Password. Isi password saat ini, password baru '
+      'Buka Penggaturan, lalu Password. Isi password saat ini, password baru '
           '(minimal 8 karakter dengan huruf dan angka), lalu konfirmasi password baru.',
     ),
   ];
@@ -71,7 +71,7 @@ class HelpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Help'),
+        title: const Text('Bantuan'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: AppColors.background,

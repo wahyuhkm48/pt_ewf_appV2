@@ -81,7 +81,7 @@ class SettingsPage extends StatelessWidget {
                 children: [
                   _SettingTile(
                     icon: Icons.person_outline_rounded,
-                    label: 'Account Information',
+                    label: 'Informasi Akun',
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const AccountInformationPage()),
                     ),
@@ -97,7 +97,7 @@ class SettingsPage extends StatelessWidget {
                   const SizedBox(height: 12),
                   _SettingTile(
                     icon: Icons.notifications_none_rounded,
-                    label: 'Notification',
+                    label: 'Notifikasi',
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const NotificationPage()),
@@ -106,7 +106,7 @@ class SettingsPage extends StatelessWidget {
                   const SizedBox(height: 12),
                   _SettingTile(
                     icon: Icons.language_rounded,
-                    label: 'Language',
+                    label: 'Bahasa',
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const LanguagePage()),
@@ -115,7 +115,7 @@ class SettingsPage extends StatelessWidget {
                   const SizedBox(height: 12),
                   _SettingTile(
                     icon: Icons.help_outline_outlined,
-                    label: 'Help',
+                    label: 'Bantuan',
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const HelpPage()),
@@ -124,7 +124,7 @@ class SettingsPage extends StatelessWidget {
                   const SizedBox(height: 12),
                   _SettingTile(
                     icon: Icons.info_outline_rounded,
-                    label: 'About Me',
+                    label: 'Tentang Saya',
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const AboutPage()),
@@ -133,7 +133,7 @@ class SettingsPage extends StatelessWidget {
                   const SizedBox(height: 12),
                   _SettingTile(
                     icon: Icons.logout_rounded,
-                    label: 'Logout',
+                    label: 'Keluar',
                     isDestructive: true,
                     onTap: () => _confirmLogout(context, auth),
                   ),
@@ -153,9 +153,9 @@ class SettingsPage extends StatelessWidget {
       await showDialog<void>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Logout butuh internet'),
+          title: const Text('Keluar butuh internet'),
           content: const Text(
-            'Logout perlu menghubungi server untuk menutup sesi akunmu dengan aman. '
+            'Keluar perlu menghubungi server untuk menutup sesi akunmu dengan aman. '
             'Sambungkan ke internet dulu. Sementara itu kamu masih bisa memakai '
             'hitung manual Pivot Point dan Nest.',
           ),
@@ -170,11 +170,11 @@ class SettingsPage extends StatelessWidget {
     final yakin = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Logout'),
+        title: const Text('Keluar'),
         content: const Text('Yakin mau keluar dari akun ini?'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Logout')),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Keluar')),
         ],
       ),
     );

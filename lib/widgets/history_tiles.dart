@@ -132,7 +132,7 @@ class EmasHistoryTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Profit: ${item.profit.toStringAsFixed(2)}',
+                  Text('Untung/Rugi : ${item.profit.toStringAsFixed(2)}',
                       style: AppTextStyles.labelBase(color: untung ? AppColors.success : AppColors.danger)),
                   const SizedBox(height: 2),
                   Text('${item.beratGram.toStringAsFixed(2)} gram • $tanggalStr',

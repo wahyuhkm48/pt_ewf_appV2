@@ -95,25 +95,25 @@ class _PasswordPageState extends State<PasswordPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _PasswordField(
-              label: 'Current Password',
-              hint: 'Enter current password',
+              label: 'Password Saat Ini',
+              hint: 'Masukkan password saat ini',
               controller: _currentPasswordController,
               obscureText: _obscureCurrent,
               onToggleVisibility: () => setState(() => _obscureCurrent = !_obscureCurrent),
             ),
             const SizedBox(height: 20),
             _PasswordField(
-              label: 'New Password',
-              hint: 'Enter new password',
+              label: 'Password Baru',
+              hint: 'Masukkan password baru',
               controller: _newPasswordController,
               obscureText: _obscureNew,
               onToggleVisibility: () => setState(() => _obscureNew = !_obscureNew),
-              helperText: 'Minimum 8 characters with letters and numbers',
+              helperText: 'Minimal 8 karakter yang terdiri dari huruf dan angka.',
             ),
             const SizedBox(height: 20),
             _PasswordField(
-              label: 'Confirm New Password',
-              hint: 'Confirm new password',
+              label: 'Konfirmasi Password Baru',
+              hint: 'Konfirmasi password baru',
               controller: _confirmPasswordController,
               obscureText: _obscureConfirm,
               onToggleVisibility: () => setState(() => _obscureConfirm = !_obscureConfirm),
@@ -137,7 +137,7 @@ class _PasswordPageState extends State<PasswordPage> {
                         width: 20, height: 20,
                         child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                     : Text(
-                        'Change Password',
+                        'Ganti Password',
                         style: AppTextStyles.labelLg(color: Colors.white),
                       ),
               ),

@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Hi $namaDepan!', style: AppTextStyles.h2()),
+                      Text('Halo $namaDepan!', style: AppTextStyles.h2()),
                       const SizedBox(height: 2),
                       Text(_greeting, style: AppTextStyles.bodyMd()),
                     ],
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
               const _WelcomeCard(),
               const SizedBox(height: 24),
               _SectionHeader(
-                title: 'Information',
+                title: 'Informasi',
                 onViewAll: () {
                   Navigator.of(context).push(PageTransitions.slideRight(const HotNewsPage(query: kNewsCombinedQuery)));
                 },
@@ -146,7 +146,7 @@ class _SectionHeader extends StatelessWidget {
         Text(title, style: AppTextStyles.labelLg()),
         GestureDetector(
           onTap: onViewAll,
-          child: Text('view all', style: AppTextStyles.labelMd(color: AppColors.primary)),
+          child: Text('lihat semua', style: AppTextStyles.labelMd(color: AppColors.primary)),
         ),
       ],
     );

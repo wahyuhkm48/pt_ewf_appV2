@@ -104,15 +104,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 150),
-                    Text('Sign Up', style: AppTextStyles.h1()),
+                    Text('Daftar', style: AppTextStyles.h1()),
                     const SizedBox(height: 6),
-                    Text('Create an account', style: AppTextStyles.bodySm()),
+                    Text('Buat akun baru', style: AppTextStyles.bodySm()),
                     const SizedBox(height: 32),
 
                     TextField(
                       controller: namaCtrl,
                       decoration: InputDecoration(
-                        labelText: 'Full Name',
+                        labelText: 'Nama Lengkap',
                         labelStyle: AppTextStyles.bodyMd(),
                         enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.divider)),
                         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
@@ -140,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       keyboardType: TextInputType.phone,
                       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9+\s-]'))],
                       decoration: InputDecoration(
-                        labelText: 'Phone Number',
+                        labelText: 'Nomor Telepon',
                         labelStyle: AppTextStyles.bodyMd(),
                         enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.divider)),
                         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
@@ -151,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     PasswordField(controller: passCtrl),
                     const SizedBox(height: 20),
 
-                    PasswordField(controller: confirmCtrl, label: 'Confirm Password'),
+                    PasswordField(controller: confirmCtrl, label: 'Konfirmasi Password'),
 
                     if (errorText != null) ...[
                       const SizedBox(height: 12),
@@ -198,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               elevation: 0,
                             ),
                             onPressed: online ? () => _submit(vm) : null,
-                            child: Text('Sign Up', style: AppTextStyles.labelLg(color: Colors.white)),
+                            child: Text('Daftar', style: AppTextStyles.labelLg(color: Colors.white)),
                           ),
                     ),
                     const SizedBox(height: 16),
@@ -209,10 +209,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       child: RichText(
                         text: TextSpan(
-                          text: 'Already have an account? ',
+                          text: 'Sudah punya akun? ',
                           style: AppTextStyles.bodySm(),
                           children: [
-                            TextSpan(text: 'Login', style: AppTextStyles.labelMd()),
+                            TextSpan(text: 'Masuk', style: AppTextStyles.labelMd()),
                           ],
                         ),
                       ),

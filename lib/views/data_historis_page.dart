@@ -247,7 +247,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
                     const Spacer(),
                     GestureDetector(
                       onTap: () => setState(_resetFilters),
-                      child: Text('Reset filter', style: AppTextStyles.labelSm(color: AppColors.primary)),
+                      child: Text('Atur ulang filter', style: AppTextStyles.labelSm(color: AppColors.primary)),
                     ),
                   ],
                 ),
@@ -371,7 +371,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
                 child: const EmptyState(
                   icon: Icons.error_outline_rounded,
                   iconSize: 30,
-                  title: 'Gagal memuat data (tap untuk coba lagi)',
+                  title: 'Gagal memuat data (ketuk untuk coba lagi)',
                   padding: EdgeInsets.symmetric(vertical: 28),
                 ),
               );
@@ -390,7 +390,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
                 child: const EmptyState(
                   icon: Icons.filter_alt_off_outlined,
                   iconSize: 30,
-                  title: 'Tidak ada data pada filter ini (tap untuk reset)',
+                  title: 'Tidak ada data pada filter ini (ketuk untuk atur ulang)',
                   padding: EdgeInsets.symmetric(vertical: 28),
                 ),
               );
@@ -487,7 +487,7 @@ class _RefreshButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Muat ulang dan reset tampilan',
+      message: 'Muat ulang dan atur ulang tampilan',
       child: Material(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(10),

@@ -30,7 +30,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notification'),
+        title: const Text('Notifikasi'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -53,12 +53,12 @@ class _NotificationPageState extends State<NotificationPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Enable All Notifications',
+                        'Aktifkan Semua Notifikasi',
                         style: AppTextStyles.labelLg(),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Receive all notifications from the app',
+                        'Terima semua notifikasi dari aplikasi.',
                         style: AppTextStyles.caption(),
                       ),
                     ],
@@ -74,35 +74,35 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
           const SizedBox(height: 24),
           Text(
-            'Notification Settings',
+            'Pengaturan Notifikasi',
             style: AppTextStyles.labelBase(color: AppColors.primary),
           ),
           const SizedBox(height: 12),
           _NotificationTile(
             icon: Icons.notifications_none_rounded,
-            title: 'Price Alert',
-            subtitle: 'Get notified when price reach your target',
+            title: 'Peringatan Harga',
+            subtitle: 'Dapatkan notifikasi saat harga mencapai target kamu',
             value: _priceAlert,
             onChanged: (v) => setState(() => _priceAlert = v),
           ),
           _NotificationTile(
             icon: Icons.trending_up_rounded,
-            title: 'Price Increase',
-            subtitle: 'Notify when price goes up',
+            title: 'Harga Naik',
+            subtitle: 'Beri tahu saat harga naik',
             value: _priceIncrease,
             onChanged: (v) => setState(() => _priceIncrease = v),
           ),
           _NotificationTile(
             icon: Icons.trending_down_rounded,
-            title: 'Price Decrease',
-            subtitle: 'Notify when price goes down',
+            title: 'Harga Turun',
+            subtitle: 'Beri tahu saat harga turun',
             value: _priceDecrease,
             onChanged: (v) => setState(() => _priceDecrease = v),
           ),
           _NotificationTile(
             icon: Icons.article_outlined,
-            title: 'Latest News',
-            subtitle: 'Get notified about latest news and updates',
+            title: 'Berita Terbaru',
+            subtitle: 'Dapatkan notifikasi tentang berita dan pembaruan terbaru',
             value: _latestNews,
             onChanged: (v) => setState(() => _latestNews = v),
           ),

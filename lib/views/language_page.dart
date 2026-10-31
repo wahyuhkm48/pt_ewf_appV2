@@ -23,7 +23,7 @@ class _LanguagePageState extends State<LanguagePage> {
       code: 'en',
       flag: '🇬🇧',
       name: 'English',
-      subtitle: 'Use English language',
+      subtitle: 'Gunakan Bahasa Inggris',
     ),
     _LanguageOption(
       code: 'zh',

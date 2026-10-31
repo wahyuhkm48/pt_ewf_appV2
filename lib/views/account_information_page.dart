@@ -32,11 +32,11 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
     final result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Full Name'),
+        title: const Text('Ubah Nama Lengkap'),
         content: TextField(controller: controller, autofocus: true),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-          TextButton(onPressed: () => Navigator.pop(context, controller.text), child: const Text('Save')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Batal')),
+          TextButton(onPressed: () => Navigator.pop(context, controller.text), child: const Text('Simpan')),
         ],
       ),
     );
@@ -56,11 +56,11 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
     final result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Phone Number'),
+        title: const Text('Ubah Nomor Telepon'),
         content: TextField(controller: controller, autofocus: true, keyboardType: TextInputType.phone),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-          TextButton(onPressed: () => Navigator.pop(context, controller.text), child: const Text('Save')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Batal')),
+          TextButton(onPressed: () => Navigator.pop(context, controller.text), child: const Text('Simpan')),
         ],
       ),
     );
@@ -86,7 +86,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
       final ok = await auth.updateFoto(bytes, picked.name);
       if (!ok && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(auth.errorMessage ?? 'Gagal upload foto')),
+          SnackBar(content: Text(auth.errorMessage ?? 'Gagal mengunggah foto')),
         );
       }
     } finally {
@@ -99,7 +99,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
     final online = context.watch<ConnectivityService>().isOnline;
     if (!online) {
       return const OfflinePageScaffold(
-        title: 'Account Information',
+        title: 'Informasi Akun',
         message: 'Mengubah nama, nomor telepon, dan foto profil membutuhkan internet.',
       );
     }
@@ -109,7 +109,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account Information'),
+        title: const Text('Informasi Akun'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: AppColors.background,
@@ -143,7 +143,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
             ),
             const SizedBox(height: 24),
             _InfoField(
-              label: 'Full Name',
+              label: 'Nama Lengkap',
               value: employee?.namaLengkap ?? '-',
               editable: true,
               onEdit: () => _editFullName(auth),
@@ -152,13 +152,13 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
             _InfoField(label: 'Email', value: employee?.email ?? '-', editable: false),
             const SizedBox(height: 12),
             _InfoField(
-              label: 'Phone Number',
+              label: 'Nomor Telepon',
               value: (employee?.noTelp?.isNotEmpty ?? false) ? employee!.noTelp! : '-',
               editable: true,
               onEdit: () => _editPhoneNumber(auth),
             ),
             const SizedBox(height: 12),
-            _InfoField(label: 'Join Date', value: _formatJoinDate(employee?.createdAt), editable: false),
+            _InfoField(label: 'Tanggal Bergabung', value: _formatJoinDate(employee?.createdAt), editable: false),
           ],
         ),
       ),
