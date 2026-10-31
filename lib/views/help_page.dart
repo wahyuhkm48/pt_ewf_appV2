@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
 class HelpPage extends StatelessWidget {
   const HelpPage({super.key});
+
+  // Nomor WhatsApp support, tanpa tanda + dan spasi
+  static const _nomorWa = '6285290307845';
+
+  // Pesan yang sudah terisi, user tinggal mengirim
+  static const _pesanWa =
+      'Halo tim Trust by Equityworld, saya butuh bantuan terkait aplikasi.\n\n'
+      'Masalah yang saya alami:\n'
+      '(tulis di sini)\n\n'
+      'Terima kasih.';
 
   static const _faqs = <(IconData, String, String)>[
     (
@@ -67,6 +78,18 @@ class HelpPage extends StatelessWidget {
     ),
   ];
 
+  Future<void> _hubungiSupport(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final uri = Uri.parse('https://wa.me/$_nomorWa?text=${Uri.encodeComponent(_pesanWa)}');
+
+    final berhasil = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!berhasil) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Tidak bisa membuka WhatsApp.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,54 +143,57 @@ class HelpPage extends StatelessWidget {
 
                     const SizedBox(height: 16),
 
-                    // CONTACT SUPPORT
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(18),
-                      decoration: BoxDecoration(
-                        color: AppColors.secondaryTint,
+                    // HUBUNGI TIM BANTUAN (membuka WhatsApp)
+                    Material(
+                      color: AppColors.secondaryTint,
+                      borderRadius: BorderRadius.circular(18),
+                      child: InkWell(
                         borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 44,
-                            height: 44,
-                            decoration: BoxDecoration(
-                              color: AppColors.primarySoft,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Icon(
-                              Icons.support_agent_rounded,
-                              color: AppColors.primary,
-                            ),
-                          ),
-
-                          const SizedBox(width: 14),
-
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Masih butuh bantuan?',
-                                  style: AppTextStyles.labelLg(),
+                        onTap: () => _hubungiSupport(context),
+                        child: Padding(
+                          padding: const EdgeInsets.all(18),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primarySoft,
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Hubungi tim support kami untuk bantuan lebih lanjut.',
-                                  style: AppTextStyles.caption(),
+                                child: const Icon(
+                                  Icons.support_agent_rounded,
+                                  color: AppColors.primary,
                                 ),
-                              ],
-                            ),
-                          ),
+                              ),
 
-                          const Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 16,
-                            color: AppColors.secondary,
+                              const SizedBox(width: 14),
+
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Masih butuh bantuan?',
+                                      style: AppTextStyles.labelLg(),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Hubungi tim kami lewat WhatsApp untuk bantuan lebih lanjut.',
+                                      style: AppTextStyles.caption(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 16,
+                                color: AppColors.secondary,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
