@@ -17,8 +17,6 @@ class NewsFallbackCover extends StatelessWidget {
 
   Color _brandColor(String source) {
     switch (source.toLowerCase()) {
-      case 'bloomberg':
-        return AppColors.brandBloomberg;
       case 'cnbc':
         return AppColors.brandCnbc;
       case 'reuters':

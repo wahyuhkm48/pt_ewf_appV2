@@ -57,7 +57,6 @@ class AppColors {
   static const Color globeDark = Color(0xFF4389D8);
 
   // Brand sumber berita (kartu berita cadangan)
-  static const Color brandBloomberg = Color(0xFF1A1A1A);
   static const Color brandCnbc = Color(0xFF0A1E42);
   static const Color brandReuters = Color(0xFFFF6600);
   static const Color brandDefault = Color(0xFF37474F);

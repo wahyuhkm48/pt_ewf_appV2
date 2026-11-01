@@ -99,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 190),
                   Text('Masuk', style: AppTextStyles.h1()),
                   const SizedBox(height: 6),
-                  Text("Selamat datang kembali, silakan masuk untuk melanjutkan", style: AppTextStyles.bodySm()),
+                  Text("Selamat datang kembali", style: AppTextStyles.bodySm()),
+                  Text("Silakan masuk untuk melanjutkan", style: AppTextStyles.bodySm()),
                   const SizedBox(height: 36),
 
                   // Email
