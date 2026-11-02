@@ -254,7 +254,7 @@ class KalkulatorOfflineNotice extends StatelessWidget {
 
 class KalkulatorTanggalField extends StatelessWidget {
   final DateTime tanggal;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const KalkulatorTanggalField({super.key, required this.tanggal, required this.onTap});
 

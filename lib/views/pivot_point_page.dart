@@ -27,6 +27,7 @@ class _PivotPointPageState extends State<PivotPointPage> {
   DateTime _selectedDate = DateTime.now();
   String _selectedAsset = 'gold'; // gold | nikkei | hangseng
   SumberData _sumberData = SumberData.otomatis;
+  bool _sudahPilihTanggal = false; 
 
   // ===== Input Manual =====
   final _highCtrl = TextEditingController();
@@ -57,7 +58,17 @@ class _PivotPointPageState extends State<PivotPointPage> {
 
   Future<void> _pilihTanggal() async {
     final picked = await pilihTanggalKalkulator(context, _selectedDate);
-    if (picked != null) setState(() => _selectedDate = picked);
+    if (picked == null || !mounted) return; // dibatalkan
+    setState(() {
+      _selectedDate = picked;
+      _sudahPilihTanggal = true;
+    });
+    _hitungOtomatis();
+  }
+
+  void _hitungOtomatis() {
+    if (context.read<ConnectivityService>().isOffline) return;
+    context.read<PivotPointViewModel>().hitung(asset: _selectedAsset, tanggal: _selectedDate);
   }
 
   void _bukaRiwayat() {
@@ -74,11 +85,6 @@ class _PivotPointPageState extends State<PivotPointPage> {
   double _round2(double v) => (v * 100).round() / 100;
 
   void _hitung() {
-    if (_sumberData == SumberData.otomatis) {
-      if (context.read<ConnectivityService>().isOffline) return;
-      context.read<PivotPointViewModel>().hitung(asset: _selectedAsset, tanggal: _selectedDate);
-      return;
-    }
 
     // ===== Manual (dihitung langsung di app, tidak lewat API, tidak disimpan) =====
     FocusScope.of(context).unfocus();
@@ -194,7 +200,13 @@ class _PivotPointPageState extends State<PivotPointPage> {
 
               KalkulatorProdukSelector(
                 selected: _selectedAsset,
-                onChanged: (v) => setState(() => _selectedAsset = v),
+                onChanged: (v) {
+                  setState(() => _selectedAsset = v);
+                  // Tanggal sudah dipilih: hasil ikut diperbarui untuk produk baru
+                  if (_sumberData == SumberData.otomatis && _sudahPilihTanggal) {
+                    _hitungOtomatis();
+                  }
+                },
               ),
               const SizedBox(height: 14),
 
@@ -221,7 +233,17 @@ class _PivotPointPageState extends State<PivotPointPage> {
               ],
 
               if (isOtomatis) ...[
-                KalkulatorTanggalField(tanggal: _selectedDate, onTap: _pilihTanggal),
+                KalkulatorTanggalField(
+                  tanggal: _selectedDate,
+                  onTap: butuhInternet ? null : _pilihTanggal,
+                ),
+                if (!_sudahPilihTanggal && !butuhInternet) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    'Pilih tanggal untuk menampilkan hasil perhitungan.',
+                    style: AppTextStyles.bodySm(),
+                  ),
+                ],
                 const SizedBox(height: 14),
               ] else ...[
                 // Input manual: High, Low, Close (+ Open opsional)
@@ -265,10 +287,16 @@ class _PivotPointPageState extends State<PivotPointPage> {
               ],
 
               const SizedBox(height: 4),
-              KalkulatorHitungButton(
-                isLoading: isLoading,
-                onPressed: (isLoading || butuhInternet) ? null : _hitung,
-              ),
+              if (!isOtomatis)
+                KalkulatorHitungButton(
+                  isLoading: false,
+                  onPressed: _hitung,
+                )
+              else if (isLoading)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
 
               if (errorMessage != null)
                 Padding(
@@ -276,7 +304,7 @@ class _PivotPointPageState extends State<PivotPointPage> {
                   child: Text(errorMessage, style: AppTextStyles.bodySm(color: AppColors.danger)),
                 ),
 
-              if (result != null) ...[
+              if (result != null && !isLoading) ...[
                 const SizedBox(height: 28),
                 ExportableArea(
                   namaFile: 'pivot_${result.asset ?? 'manual'}',
@@ -327,8 +355,8 @@ class _PivotPointPageState extends State<PivotPointPage> {
         child: Column(children: buildPivotLevelRows(result)),
       ),
 
+      const SizedBox(height: 24),
       Text('Indikator Action', style: AppTextStyles.h3(color: AppColors.primary)),
-      const SizedBox(height: 12),
       // Action + keterangan sekarang di bawah tabel level
       if (result.action != null) ...[
         const SizedBox(height: 16),

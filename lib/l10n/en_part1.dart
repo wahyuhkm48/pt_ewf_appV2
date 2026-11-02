@@ -227,4 +227,5 @@ const Map<String, String> enPart1 = {
   'Rentang data: {rentang}': 'Data range: {rentang}',
   'Dicetak: {tanggal}': 'Printed: {tanggal}',
   'Halaman {n} dari {total}': 'Page {n} of {total}',
+  'Pilih tanggal untuk menampilkan hasil perhitungan.': 'Pick a date to show the calculation result.',
 };
