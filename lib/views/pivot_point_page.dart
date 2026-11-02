@@ -14,6 +14,7 @@ import '../widgets/exportable_area.dart';
 import '../widgets/kalkulator_form_widgets.dart';
 import '../widgets/mini_stat.dart';
 import 'riwayat_kalkulator_page.dart';
+import '../l10n/app_strings.dart';
 
 /// Halaman kalkulator Pivot Point.
 class PivotPointPage extends StatefulWidget {
@@ -190,9 +191,9 @@ class _PivotPointPageState extends State<PivotPointPage> {
               ),
               const SizedBox(height: 24),
 
-              Text('Data Pasar (Input)', style: AppTextStyles.h3(color: AppColors.primary)),
+              Text('Data Pasar '.tr, style: AppTextStyles.h3(color: AppColors.primary)),
               const SizedBox(height: 4),
-              Text('Pilih produk, sumber data & tanggal', style: AppTextStyles.bodySm()),
+              Text('Pilih produk, sumber data & tanggal'.tr, style: AppTextStyles.bodySm()),
               const SizedBox(height: 16),
 
               const PivotPointExplainer(),
@@ -249,13 +250,13 @@ class _PivotPointPageState extends State<PivotPointPage> {
                 // Input manual: High, Low, Close (+ Open opsional)
                 Row(
                   children: [
-                    Expanded(child: KalkulatorNumberField(label: 'High', controller: _highCtrl, hint: 'cth. 2350.40')),
+                    Expanded(child: KalkulatorNumberField(label: 'High', controller: _highCtrl, hint: 'cth. 2350.40'.tr)),
                     const SizedBox(width: 12),
-                    Expanded(child: KalkulatorNumberField(label: 'Low', controller: _lowCtrl, hint: 'cth. 2330.10')),
+                    Expanded(child: KalkulatorNumberField(label: 'Low', controller: _lowCtrl, hint: 'cth. 2330.10'.tr)),
                   ],
                 ),
                 const SizedBox(height: 12),
-                KalkulatorNumberField(label: 'Close', controller: _closeCtrl, hint: 'cth. 2342.75'),
+                KalkulatorNumberField(label: 'Close', controller: _closeCtrl, hint: 'cth. 2342.75'.tr),
                 const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () => setState(() => _showOpenManual = !_showOpenManual),
@@ -268,7 +269,7 @@ class _PivotPointPageState extends State<PivotPointPage> {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        _showOpenManual ? 'Sembunyikan Open' : 'Tambah Open (opsional)',
+                        _showOpenManual ? 'Sembunyikan Open'.tr : 'Tambah Open (opsional)'.tr,
                         style: AppTextStyles.labelSm(color: AppColors.primary),
                       ),
                     ],
@@ -276,10 +277,10 @@ class _PivotPointPageState extends State<PivotPointPage> {
                 ),
                 if (_showOpenManual) ...[
                   const SizedBox(height: 10),
-                  KalkulatorNumberField(label: 'Open', controller: _openCtrl, hint: 'cth. 2338.00'),
+                  KalkulatorNumberField(label: 'Open', controller: _openCtrl, hint: 'cth. 2338.00'.tr),
                   const SizedBox(height: 4),
                   Text(
-                    'Diisi supaya muncul sinyal BUY/SELL. Kalau dikosongkan, hanya tabel level yang tampil.',
+                    'Diisi supaya muncul indikator BUY/SELL. Kalau dikosongkan, hanya tabel level yang tampil.'.tr,
                     style: AppTextStyles.micro().copyWith(height: 1.4),
                   ),
                 ],

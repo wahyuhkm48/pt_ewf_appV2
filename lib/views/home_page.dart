@@ -148,7 +148,7 @@ class _SectionHeader extends StatelessWidget {
         Text(title, style: AppTextStyles.labelLg()),
         GestureDetector(
           onTap: onViewAll,
-          child: Text('lihat semua', style: AppTextStyles.labelMd(color: AppColors.primary)),
+          child: Text('Lihat semua', style: AppTextStyles.labelMd(color: AppColors.primary)),
         ),
       ],
     );
@@ -324,7 +324,7 @@ class _AboutAppSection extends StatelessWidget {
               onTap: () => Navigator.of(context).push(
                 PageTransitions.slideRight(const AboutPage()),
               ),
-              child: Text('selengkapnya', style: AppTextStyles.labelMd(color: AppColors.primary)),
+              child: Text('Selengkapnya'.tr, style: AppTextStyles.labelMd(color: AppColors.primary)),
             ),
           ],
         ),

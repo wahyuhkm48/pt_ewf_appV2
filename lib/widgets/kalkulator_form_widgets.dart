@@ -30,7 +30,7 @@ String formatTanggalKalkulator(DateTime date) {
   final now = DateTime.now();
   final isToday = date.year == now.year && date.month == now.month && date.day == now.day;
   final tanggal = '${date.day} ${_kBulan[date.month - 1]} ${date.year}';
-  return isToday ? 'Hari ini, $tanggal' : tanggal;
+  return isToday ? 'Hari ini, {tanggal}'.trp({'tanggal': tanggal}) : tanggal;
 }
 
 String formatAngka(double value) => value.toStringAsFixed(2);
@@ -44,7 +44,7 @@ double? parseAngka(String raw) {
 String subjudulExport(String? asset, DateTime? tanggal) {
   final label = assetLabel(asset);
   return tanggal == null
-      ? '$label • Perhitungan manual' // hasil manual tidak punya tanggal
+      ? '{label} • Perhitungan manual'.trp({'label': label}) // hasil manual tidak punya tanggal
       : '$label • ${formatTanggalKalkulator(tanggal)}';
 }
 
@@ -207,7 +207,7 @@ class KalkulatorSumberDataSelector extends StatelessWidget {
           child: Row(
             children: SumberData.values.map((sumber) {
               final selected = value == sumber;
-              final label = sumber == SumberData.otomatis ? 'Ambil dari Pasar' : 'Input Manual';
+              final label = sumber == SumberData.otomatis ? 'Ambil dari Pasar'.tr : 'Masukkan Manual'.tr;
               return Expanded(
                 child: GestureDetector(
                   onTap: () => onChanged(sumber),
@@ -350,7 +350,7 @@ class KalkulatorHitungButton extends StatelessWidget {
                 child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
               )
             : const Icon(Icons.calculate_rounded, color: Colors.white),
-        label: Text('Hitung', style: AppTextStyles.labelLg(color: Colors.white)),
+        label: Text('Hitung'.tr, style: AppTextStyles.labelLg(color: Colors.white)),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           padding: const EdgeInsets.symmetric(vertical: 16),

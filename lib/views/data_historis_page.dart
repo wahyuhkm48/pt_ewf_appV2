@@ -355,7 +355,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
             ),
             child: Row(
               children: [
-                _dateCell('TANGGAL', AppTextStyles.labelSm()),
+                _dateCell('TANGGAL'.tr, AppTextStyles.labelSm()),
                 _ohlcCell('OPEN', AppTextStyles.labelSm()),
                 _ohlcCell('HIGH', AppTextStyles.labelSm()),
                 _ohlcCell('LOW', AppTextStyles.labelSm()),

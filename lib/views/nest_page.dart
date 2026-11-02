@@ -1,5 +1,6 @@
 // views/nest_page.dart
 import 'package:flutter/material.dart' hide Text;
+import 'package:trustbyequityworld/l10n/app_strings.dart';
 import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../core/connectivity_service.dart';
@@ -141,9 +142,9 @@ class _NestPageState extends State<NestPage> {
               ),
               const SizedBox(height: 24),
 
-              Text('Data Pasar (Input)', style: AppTextStyles.h3(color: AppColors.primary)),
+              Text('Data Pasar '.tr, style: AppTextStyles.h3(color: AppColors.primary)),
               const SizedBox(height: 4),
-              Text('Pilih produk, sumber data & tanggal', style: AppTextStyles.bodySm()),
+              Text('Pilih produk, sumber data & tanggal'.tr, style: AppTextStyles.bodySm()),
               const SizedBox(height: 16),
 
               const NestExplainer(),
@@ -204,7 +205,7 @@ class _NestPageState extends State<NestPage> {
                       child: KalkulatorNumberField(
                         label: 'Close (Kemarin)',
                         controller: _closeKemarinCtrl,
-                        hint: 'cth. 2342.75',
+                        hint: 'cth. 2342.75'.tr,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -212,7 +213,7 @@ class _NestPageState extends State<NestPage> {
                       child: KalkulatorNumberField(
                         label: 'Open (Hari ini)',
                         controller: _openHariIniCtrl,
-                        hint: 'cth. 2338.00',
+                        hint: 'cth. 2338.00'.tr,
                       ),
                     ),
                   ],

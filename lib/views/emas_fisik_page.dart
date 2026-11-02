@@ -1,5 +1,6 @@
 // views/emas_fisik_screen.dart
 import 'package:flutter/material.dart' hide Text;
+import 'package:trustbyequityworld/l10n/app_strings.dart';
 import '../widgets/app_text.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -139,7 +140,7 @@ class _EmasFisikPageState extends State<EmasFisikPage> {
               const SizedBox(height: 24),
               const EmasFisikExplainer(),
               const SizedBox(height: 20),
-              Text('Input Data',
+              Text('Masukkan Data'.tr,
                   style: AppTextStyles.h3(color: AppColors.primary)),
               const SizedBox(height: 12),
 
@@ -150,7 +151,7 @@ class _EmasFisikPageState extends State<EmasFisikPage> {
                     children: [
                       SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
                       SizedBox(width: 10),
-                      Text('Memuat kurs terkini...', style: AppTextStyles.bodySm()),
+                      Text('Memuat kurs terkini...'.tr, style: AppTextStyles.bodySm()),
                     ],
                   ),
                 ),
@@ -160,18 +161,18 @@ class _EmasFisikPageState extends State<EmasFisikPage> {
                   child: Text(vm.errorHarga!, style: AppTextStyles.bodySm(color: AppColors.danger)),
                 ),
 
-              _InputField(label: 'Harga Beli (USD / toz)', controller: _hargaBeliController, hint: 'Contoh: 2.500'),
+              _InputField(label: 'Harga Beli (USD / toz)'.tr, controller: _hargaBeliController, hint: 'Contoh: 2.500'.tr),
               const SizedBox(height: 14),
-              _InputField(label: 'Harga Jual (USD / toz)', controller: _hargaJualController, hint: 'Contoh: 2.510'),
+              _InputField(label: 'Harga Jual (USD / toz)'.tr, controller: _hargaJualController, hint: 'Contoh: 2.510'.tr),
               const SizedBox(height: 14),
               _InputField(
-                label: 'Kurs (USD ke IDR)',
+                label: 'Kurs (USD ke IDR)'.tr,
                 controller: _kursController,
                 readOnly: false,
-                hint: vm.isLoadingHarga ? 'Memuat...' : null,
+                hint: vm.isLoadingHarga ? 'Memuat...'.tr : null,
               ),
               const SizedBox(height: 14),
-              _InputField(label: 'Modal (Rupiah)', controller: _modalController, hint: 'Contoh: 10.000.000'),
+              _InputField(label: 'Modal (Rupiah)'.tr, controller: _modalController, hint: 'Contoh: 10.000.000'.tr),
 
               const SizedBox(height: 48),
               SizedBox(
@@ -183,7 +184,7 @@ class _EmasFisikPageState extends State<EmasFisikPage> {
                           width: 18, height: 18,
                           child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                       : const Icon(Icons.calculate_rounded, color: Colors.white),
-                  label: Text('Hitung', style: AppTextStyles.labelLg(color: Colors.white)),
+                  label: Text('Hitung'.tr, style: AppTextStyles.labelLg(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),

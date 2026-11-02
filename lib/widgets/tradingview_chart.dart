@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../theme/app_colors.dart';
 
@@ -21,6 +22,7 @@ class TradingViewChart extends StatefulWidget {
 class _TradingViewChartState extends State<TradingViewChart> {
   late final WebViewController _controller;
   late bool _dark;
+  bool _grafikSiap = false; // true setelah halaman grafik selesai dimuat
 
   @override
   void initState() {
@@ -30,10 +32,29 @@ class _TradingViewChartState extends State<TradingViewChart> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.transparent)
       ..enableZoom(false)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (_) => _grafikSiap = true,
+          onNavigationRequest: _tanganiNavigasi,
+        ),
+      )
       ..loadHtmlString(
         _buildHtml(widget.symbol, widget.interval),
         baseUrl: 'https://www.tradingview.com',
-    );
+      );
+  }
+
+  /// Klik link di grafik (misalnya logo TradingView) dibuka di browser
+  /// atau aplikasi TradingView, bukan di dalam kotak grafik.
+  NavigationDecision _tanganiNavigasi(NavigationRequest request) {
+    // Bagian dalam widget (iframe) dan pemuatan awal dibiarkan
+    if (!request.isMainFrame || !_grafikSiap) return NavigationDecision.navigate;
+
+    final uri = Uri.tryParse(request.url);
+    if (uri != null && (uri.scheme == 'http' || uri.scheme == 'https')) {
+      launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+    return NavigationDecision.prevent;
   }
 
   @override
@@ -44,6 +65,7 @@ class _TradingViewChartState extends State<TradingViewChart> {
         oldWidget.interval != widget.interval ||
         modeBerubah) {
       _dark = AppColors.isDark;
+      _grafikSiap = false; // muat ulang grafik harus lolos penjagaan di atas
       _controller.loadHtmlString(
         _buildHtml(widget.symbol, widget.interval),
         baseUrl: 'https://www.tradingview.com',

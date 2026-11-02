@@ -12,9 +12,13 @@ const Map<String, String> enPart1 = {
   'Pengguna': 'User',
   'Halo {nama}!': 'Hi {nama}!',
 
+  // ===== Welcome =====
+  'Selamat Datang': 'Welcome',
+  'Masuk atau buat akun untuk melanjutkan.': 'Sign in or create an account to continue.',
+
   // ===== Beranda =====
   'Informasi': 'Information',
-  'lihat semua': 'View all',
+  'Lihat semua': 'View all',
   'Berita butuh internet': 'News needs internet',
   'Berita pasar dimuat dari internet.': 'Market news is loaded from the internet.',
   'Gagal memuat berita': 'Failed to load news',
@@ -42,6 +46,8 @@ const Map<String, String> enPart1 = {
   'Hasil hitunganmu tersimpan dan bisa dibuka lagi.': 'Your results are saved and can be reopened.',
   'Tanpa internet? Pivot Point dan Nest mode manual tetap bisa dipakai.': 'No internet? Pivot Point and Nest in manual mode still work.',
   'Hasil perhitungan adalah alat bantu analisis, bukan jaminan keuntungan.': 'Calculation results are an analysis aid, not a guarantee of profit.',
+  'Selengkapnya': 'More',
+
 
   // ===== Berita =====
   'Berita Terkini': 'Hot News',
@@ -194,6 +200,7 @@ const Map<String, String> enPart1 = {
   '30 Hari': '30 Days',
   'Terbaru': 'Newest',
   'Terlama': 'Oldest',
+  'TANGGAL': 'DATE',
   'Belum ada data untuk diunduh': 'No data to download yet',
   'Gagal membuat file PDF, coba lagi': 'Failed to create the PDF file, please try again',
   'Gagal memuat data (ketuk untuk coba lagi)': 'Failed to load data (tap to retry)',
@@ -212,7 +219,12 @@ const Map<String, String> enPart1 = {
   'Fitur ini membutuhkan internet. Saat offline, hanya hitung manual Pivot Point dan Nest yang bisa dipakai.': 'This feature requires internet. While offline, only manual Pivot Point and Nest calculations are available.',
   '{judul} butuh internet': '{judul} needs internet',
 
-    // ===== Tampilan =====
+  // ===== Riwayat =====
+  'Riwayat Pivot Point': 'Pivot Point History',
+  'Riwayat Nest': 'Nest History',
+  'Riwayat Emas Fisik': 'Physical Gold History',
+
+  // ===== Tampilan =====
   'Tampilan': 'Appearance',
   'Terang': 'Light',
   'Gelap': 'Dark',
@@ -222,10 +234,96 @@ const Map<String, String> enPart1 = {
   'Mengikuti pengaturan HP kamu': 'Follows your phone settings',
 
   // ===== PDF Data Historis =====
-  'Tanggal': 'Date',
   'Data Historis {produk}': '{produk} Historical Data',
   'Rentang data: {rentang}': 'Data range: {rentang}',
   'Dicetak: {tanggal}': 'Printed: {tanggal}',
   'Halaman {n} dari {total}': 'Page {n} of {total}',
   'Pilih tanggal untuk menampilkan hasil perhitungan.': 'Pick a date to show the calculation result.',
+
+  // ===== Panduan Pivot Point / Nest / Emas Fisik =====
+  'Data Pasar ': 'Market Data ',
+  'Pilih produk, sumber data & tanggal': 'Select product, data source & date',
+  'Produk': 'Product',
+  'Sumber Data': 'Data Source',
+  'Ambil dari Pasar': 'Take from Market',
+  'Masukkan Manual': 'Enter Manual',
+  'Hitung': 'Count',
+
+  'Mengerti & Tutup': 'Got it & Close',
+  'Apa itu Pivot Point?': 'What is Pivot Point?',
+  'Panduan & Rumus Perhitungan Level': 'Guide & Level Calculation Formulas',
+  'Pengertian Pivot Point': 'What Pivot Point Means',
+  'Pivot Point adalah harga wajar atau harga pasaran, untuk menentukan aksi beli dan jual yang mengacu pada harga pembukaan (open).': 'Pivot Point is a fair or market price, used to decide buy and sell actions based on the opening (open) price.',
+  'Rumus Perhitungan Level Pivot Point': 'Pivot Point Level Calculation Formulas',
+  'Titik tumpu harga wajar harian sebagai patokan penentu area bullish atau bearish.': 'The daily fair price pivot, used as the benchmark that decides bullish or bearish areas.',
+  '2. Range Harian': '2. Daily Range',
+  'Jarak rentang pergerakan volatilitas harga tertinggi dan terendah periode sebelumnya.': 'The volatility range between the highest and lowest price of the previous period.',
+  'Batas tahanan harga atas pertama dan kedua untuk target profit atau area jenuh beli.': 'The first and second upper price barriers, for profit targets or overbought areas.',
+  'Tingkat batas atas ekstrim pergerakan tren pasar lanjutan yang sangat kuat.': 'Extreme upper limits for a very strong continuing market trend.',
+  'Batas tahanan harga bawah pertama dan kedua untuk titik beli atau area pantulan harga.': 'The first and second lower price barriers, for buy points or price rebound areas.',
+  'Tingkat batas bawah ekstrim ketika pasar mengalami tekanan jual yang sangat kuat.': 'Extreme lower limits when the market is under very strong selling pressure.',
+  'cth. 2350.40': 'e.g. 2350,40',
+  'cth. 2330.10': 'e.g. 2330,10',
+  'cth. 2342.75': 'e.g. 2342,75',
+  'Sembunyikan Open': 'Hide Open',
+  'Tambah Open (opsional)': 'Add Open (optional)',
+  'cth. 2338.00': 'e.g. 2338,00',
+  'Diisi supaya muncul indikator BUY/SELL. Kalau dikosongkan, hanya tabel level yang tampil.': 'Fill in the field to display the BUY/SELL indicator. If left blank, only the level table will be displayed.',
+
+
+  'Apa itu Konsep Nest?': 'What is the Nest Concept?',
+  'Panduan & Aturan Analisa Follow the Trend': 'Guide & Follow the Trend Analysis Rules',
+  'Pengertian Konsep Nest': 'What the Nest Concept Means',
+  'Konsep Nest adalah konsep follow the trend yang mengacu pada harga penutupan kemarin dibandingkan dengan harga pembukaan kemarin untuk menentukan arah transaksi selanjutnya.': "The Nest concept is a follow-the-trend concept that compares yesterday's closing price with yesterday's opening price to decide the direction of the next transaction.",
+  'Aturan Penentuan Aksi': 'Action Decision Rules',
+  '1. BELI': '1. BUY',
+  '2. JUAL': '2. SELL',
+  '3. NETRAL': '3. NEUTRAL',
+  'Harga Close > Harga Open': 'Close Price > Open Price',
+  'Harga Close < Harga Open': 'Close Price < Open Price',
+  'Harga Close = Harga Open': 'Close Price = Open Price',
+  'Ketika harga penutupan kemarin lebih tinggi dari harga pembukaan kemarin, maka pasar cenderung memiliki peluang untuk melanjutkan kenaikan.': "When yesterday's closing price is higher than yesterday's opening price, the market tends to have a chance of continuing to rise.",
+  'Ketika harga penutupan kemarin lebih rendah dari harga pembukaan kemarin, maka pasar cenderung memiliki peluang untuk melanjutkan penurunan.': "When yesterday's closing price is lower than yesterday's opening price, the market tends to have a chance of continuing to fall.",
+  'Ketika harga penutupan kemarin sama dengan harga pembukaan kemarin, pasar memiliki kecenderungan bergerak normal.': "When yesterday's closing price equals yesterday's opening price, the market tends to move normally.",
+
+  'Apa itu Emas Fisik?': 'What is Physical Gold?',
+  'Panduan & Rumus Simulasi Perhitungan': 'Guide & Calculation Simulation Formulas',
+  'Pengertian Emas Fisik': 'What Physical Gold Means',
+  'Emas yang memiliki bentuk nyata dan bisa dipegang langsung, seperti emas batangan atau perhiasan.': 'Gold that has a real form and can be held directly, such as gold bars or jewelry.',
+  'Ketentuan Konversi': 'Conversion Rules',
+  'Standar bobot konversi emas internasional per troy ounce.': 'The international gold weight conversion standard per troy ounce.',
+  'Rumus Perhitungan Emas Fisik': 'Physical Gold Calculation Formulas',
+  '1. Harga Beli / Gram': '1. Buy Price / Gram',
+  '2. Harga Jual / Gram': '2. Sell Price / Gram',
+  '3. Selisih / Gram': '3. Difference / Gram',
+  '4. Jumlah Emas Diperoleh (Gram)': '4. Gold Amount Obtained (Grams)',
+  '5. Total Keuntungan / Kerugian': '5. Total Profit / Loss',
+  '(Harga Beli Point × Kurs USD/IDR) ÷ 31.1': '(Buy Price Point × USD/IDR Rate) ÷ 31.1',
+  '(Harga Jual Point × Kurs USD/IDR) ÷ 31.1': '(Sell Price Point × USD/IDR Rate) ÷ 31.1',
+  'Harga Jual / Gram - Harga Beli / Gram': 'Sell Price / Gram - Buy Price / Gram',
+  'Alokasi Modal ÷ Harga Beli / Gram': 'Capital Allocation ÷ Buy Price / Gram',
+  'Selisih / Gram × Jumlah Emas': 'Difference / Gram × Gold Amount',
+  'Konversi harga beli emas internasional per troy ounce (31.1 gram) ke harga rupiah per gram.': 'Converts the international gold buy price per troy ounce (31.1 grams) into a rupiah price per gram.',
+  'Konversi harga jual emas internasional per troy ounce (31.1 gram) ke harga rupiah per gram.': 'Converts the international gold sell price per troy ounce (31.1 grams) into a rupiah price per gram.',
+  'Selisih keuntungan atau kerugian per 1 gram emas fisik.': 'The profit or loss difference per 1 gram of physical gold.',
+  'Total bobot gram emas fisik yang didapatkan dari modal yang dibelanjakan.': 'The total weight in grams of physical gold obtained from the capital spent.',
+  'Total keuntungan atau kerugian dari seluruh emas fisik yang dibeli.': 'The total profit or loss from all the physical gold bought.',
+  'Masukkan Data': 'Enter Data',
+  'Memuat kurs terkini...': 'Loading the latest exchange rates...',
+  'Harga Beli (USD / toz)': 'Buy Price (USD / toz)',
+  'Harga Jual (USD / toz)': 'Sell Price (USD / toz)',
+  'Kurs (USD ke IDR)': 'Exchange rate (USD to IDR)',
+  'Modal (Rupiah)': 'Capital (Rupiah)',
+  'Memuat...': 'Load...',
+  'Contoh: 2.500': 'Example: 2,500',
+  'Contoh: 2.510': 'Example: 2,510',
+  'Contoh: 10.000.000': 'Example: 10,000,000',
+
+    // ===== Kalkulator: tanggal dan label =====
+  'Tanggal': 'Date',
+  'Hari ini, {tanggal}': 'Today, {tanggal}',
+  '{label} • Perhitungan manual': '{label} • Manual calculation',
+  'Open (Hari ini)': 'Open (Today)',
+  'Close (Kemarin)': 'Close (Yesterday)',
+  'Isi Close (Kemarin) dan Open (Hari ini) dengan angka yang valid.': 'Enter valid numbers for Close (Yesterday) and Open (Today).',
 };

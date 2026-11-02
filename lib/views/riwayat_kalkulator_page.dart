@@ -1,5 +1,6 @@
 // views/riwayat_kalkulator_page.dart
 import 'package:flutter/material.dart' hide Text;
+import 'package:trustbyequityworld/l10n/app_strings.dart';
 import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
@@ -48,9 +49,9 @@ class _RiwayatKalkulatorPageState extends State<RiwayatKalkulatorPage> {
   bool get _punyaFilterProduk => widget.jenis != RiwayatJenis.emasFisik;
 
   String get _judul => switch (widget.jenis) {
-        RiwayatJenis.pivotPoint => 'Riwayat Pivot Point',
-        RiwayatJenis.nest => 'Riwayat Nest',
-        RiwayatJenis.emasFisik => 'Riwayat Emas Fisik',
+        RiwayatJenis.pivotPoint => 'Riwayat Pivot Point'.tr,
+        RiwayatJenis.nest => 'Riwayat Nest'.tr,
+        RiwayatJenis.emasFisik => 'Riwayat Emas Fisik'.tr,
       };
 
   bool get _hasData => switch (widget.jenis) {

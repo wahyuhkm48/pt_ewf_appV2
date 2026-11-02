@@ -1,6 +1,7 @@
 // widgets/education_sections.dart
 import 'package:flutter/material.dart' hide Text;
-import '../widgets/app_text.dart';
+import 'panduan_dialog.dart';
+import 'app_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -48,62 +49,6 @@ class ExplainCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class _P extends StatelessWidget {
-  final String text;
-  const _P(this.text);
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Text(text,
-            style: AppTextStyles.bodySm().copyWith(height: 1.5)),
-      );
-}
-
-class _Term extends StatelessWidget {
-  final String term;
-  final String desc;
-  const _Term(this.term, this.desc);
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 74,
-              child: Text(term,
-                  style: AppTextStyles.labelMd()),
-            ),
-            Expanded(
-              child: Text(desc,
-                  style: AppTextStyles.bodySm().copyWith(height: 1.4)),
-            ),
-          ],
-        ),
-      );
-}
-
-class _Disclaimer extends StatelessWidget {
-  const _Disclaimer();
-
-  @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: AppColors.primary.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Text(
-          'Hasil ini adalah indikator berbasis rumus untuk membantu analisis, bukan jaminan '
-          'harga akan bergerak sesuai sinyal. Trading mengandung risiko, selalu sesuaikan '
-          'dengan profil risiko dan modal Anda.',
-          style: AppTextStyles.caption().copyWith(height: 1.45),
-        ),
-      );
 }
 
 /// Kartu "Kenapa hasilnya BUY/SELL?" berisi alasan dengan angka nyata dari hasil hitung.
@@ -169,24 +114,10 @@ class PivotPointExplainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ExplainCard(
+    return PanduanBukaKartu(
       title: 'Apa itu Pivot Point?',
-      children: [
-        _P('Pivot Point adalah titik acuan yang dihitung dari harga tertinggi (High), '
-            'terendah (Low), dan penutupan (Close) pada hari perdagangan sebelumnya. '
-            'Trader memakainya untuk memperkirakan area harga penting di hari ini.'),
-        _P('Rumusnya: Pivot Point = (High + Low + Close) ÷ 3.'),
-        _Term('Resistance', 'R1-R4: area di atas Pivot Point tempat harga cenderung tertahan naik.'),
-        _Term('Support', 'S1-S4: area di bawah Pivot Point tempat harga cenderung tertahan turun.'),
-        _P('Sinyal Buy/Sell dibaca dengan membandingkan Pivot Point dengan harga open hari itu:'),
-        _Term('BUY', 'Pivot Point di atas harga open. Harga dibuka di bawah titik acuan, sehingga ada '
-            'kecenderungan bergerak naik menuju Pivot Point.'),
-        _Term('SELL', 'Pivot Point di bawah harga open. Harga dibuka di atas titik acuan, sehingga ada '
-            'kecenderungan bergerak turun menuju Pivot Point.'),
-        _Term('NETRAL', 'Pivot Point sama dengan harga open, belum ada arah yang jelas.'),
-        SizedBox(height: 4),
-        _Disclaimer(),
-      ],
+      subtitle: 'Panduan & Rumus Perhitungan Level',
+      onTap: () => bukaPanduanPivotPoint(context),
     );
   }
 }
@@ -235,21 +166,10 @@ class NestExplainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ExplainCard(
-      title: 'Apa itu Nest?',
-      children: [
-        _P('Nest adalah indikator sederhana yang membandingkan harga penutupan (Close) '
-            'hari perdagangan sebelumnya dengan harga pembukaan (Open) pada tanggal yang Anda pilih.'),
-        _Term('BUY', 'Close kemarin lebih tinggi dari Open hari ini. Harga dibuka lebih murah dari '
-            'penutupan kemarin, sehingga ada peluang harga kembali naik.'),
-        _Term('SELL', 'Close kemarin lebih rendah dari Open hari ini. Harga dibuka lebih mahal dari '
-            'penutupan kemarin, sehingga ada peluang harga kembali turun.'),
-        _Term('NETRAL', 'Close kemarin sama dengan Open hari ini, belum ada arah yang jelas.'),
-        _P('Jika tanggal yang dipilih adalah hari ini, harga Open diambil dari harga pasar terkini. '
-            'Jika tanggal sebelumnya, dipakai data historis.'),
-        SizedBox(height: 4),
-        _Disclaimer(),
-      ],
+    return PanduanBukaKartu(
+      title: 'Apa itu Konsep Nest?',
+      subtitle: 'Panduan & Aturan Analisa Follow the Trend',
+      onTap: () => bukaPanduanNest(context),
     );
   }
 }
@@ -296,24 +216,10 @@ class EmasFisikExplainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ExplainCard(
-      title: 'Apa itu kalkulator Emas Fisik?',
-      children: [
-        _P('Kalkulator ini menghitung perkiraan keuntungan atau kerugian jika Anda membeli emas '
-            'pada satu harga lalu menjualnya pada harga lain, dengan modal rupiah yang Anda tentukan.'),
-        _Term('HB', 'Harga beli emas dalam USD per troy ounce (toz).'),
-        _Term('HJ', 'Harga jual emas dalam USD per troy ounce (toz).'),
-        _Term('Kurs', 'Nilai tukar USD ke Rupiah yang dipakai.'),
-        _Term('Modal', 'Uang rupiah yang Anda pakai untuk membeli emas.'),
-        _P('Harga emas dunia dihitung per troy ounce, sedangkan 1 troy ounce = 31,1 gram. '
-            'Maka harga per gram dalam rupiah = Harga USD × Kurs ÷ 31,1.'),
-        _Term('HHB', 'Harga hitung beli per gram (HB × Kurs ÷ 31,1).'),
-        _Term('HHJ', 'Harga hitung jual per gram (HJ × Kurs ÷ 31,1).'),
-        _Term('Berat', 'Modal ÷ HHB, yaitu jumlah gram emas yang bisa dibeli.'),
-        _Term('Untung', 'Selisih (HHJ - HHB) × berat. Positif berarti untung, negatif berarti rugi.'),
-        SizedBox(height: 4),
-        _Disclaimer(),
-      ],
+    return PanduanBukaKartu(
+      title: 'Apa itu Emas Fisik?',
+      subtitle: 'Panduan & Rumus Simulasi Perhitungan',
+      onTap: () => bukaPanduanEmasFisik(context),
     );
   }
 }

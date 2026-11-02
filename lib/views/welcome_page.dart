@@ -1,5 +1,6 @@
 // views/welcome_page.dart
 import 'package:flutter/material.dart' hide Text;
+import 'package:trustbyequityworld/l10n/app_strings.dart';
 import '../widgets/app_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -123,13 +124,13 @@ class WelcomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Selamat Datang',
+                          'Selamat Datang'.tr,
                           style: AppTextStyles.h1(color: AppColors.textPrimary)
                               .copyWith(fontWeight: FontWeight.w800),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Masuk atau buat akun untuk melanjutkan.',
+                          'Masuk atau buat akun untuk melanjutkan.'.tr,
                           textAlign: TextAlign.center,
                           style: AppTextStyles.bodyMd(color: AppColors.textSecondary),
                         ),
