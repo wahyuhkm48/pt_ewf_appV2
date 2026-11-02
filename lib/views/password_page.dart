@@ -1,5 +1,6 @@
 // views/password_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -7,6 +8,7 @@ import '../viewmodels/auth_viewmodel.dart';
 import '../utils/form_errors.dart';
 import '../widgets/offline_widgets.dart';
 import '../core/connectivity_service.dart';
+import '../l10n/app_strings.dart';
 
 class PasswordPage extends StatefulWidget {
   const PasswordPage({super.key});
@@ -177,7 +179,7 @@ class _PasswordField extends StatelessWidget {
           controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
-            hintText: hint,
+            hintText: hint.tr,
             prefixIcon: const Icon(Icons.lock_outline, size: 20),
             suffixIcon: IconButton(
               icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility, size: 20),

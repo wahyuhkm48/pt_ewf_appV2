@@ -1,5 +1,6 @@
 // views/about_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -10,7 +11,7 @@ class AboutPage extends StatelessWidget {
     (Icons.stacked_line_chart_rounded, 'Pivot Point', 'Hitung titik pivot, level support dan resistance, serta indikator buy atau sell dari data pasar atau input manual.'),
     (Icons.insights_rounded, 'Nest', 'Sinyal harian dari perbandingan Close kemarin dan Open hari ini.'),
     (Icons.savings_outlined, 'Emas Fisik', 'Hitung selisih harga, berat emas, dan estimasi keuntungan dari harga beli, harga jual, kurs, dan modal.'),
-    (Icons.show_chart_rounded, 'Chart & Data Historis', 'Grafik interaktif Gold, Nikkei (JPK), dan Hang Seng (HKK) dengan data historis Open, High, Low, Close yang bisa diunduh ke Pdf.'),
+    (Icons.show_chart_rounded, 'Chart & Data Historis', 'Grafik interaktif Gold, Nikkei (JPK), dan Hang Seng (HKK) dengan data historis Open, High, Low, Close yang bisa diunduh ke PDF.'),
     (Icons.history_rounded, 'Riwayat', 'Simpan dan lihat kembali hasil perhitungan Pivot Point, Nest, dan Emas Fisik.'),
     (Icons.newspaper_rounded, 'Berita', 'Berita pasar dan ekonomi terbaru dari CNBC dan Reuters.'),
   ];

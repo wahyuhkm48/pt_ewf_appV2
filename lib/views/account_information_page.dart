@@ -1,5 +1,6 @@
 // views/account_information_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
@@ -8,6 +9,7 @@ import '../viewmodels/auth_viewmodel.dart';
 import '../widgets/avatar_ring.dart';
 import '../widgets/offline_widgets.dart';
 import '../core/connectivity_service.dart';
+import '../l10n/app_strings.dart';
 
 class AccountInformationPage extends StatefulWidget {
   const AccountInformationPage({super.key});
@@ -19,7 +21,7 @@ class AccountInformationPage extends StatefulWidget {
 class _AccountInformationPageState extends State<AccountInformationPage> {
   bool _uploadingFoto = false;
 
-  static const _months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  static List<String> get _months => AppLang.bulan;
 
   String _formatJoinDate(DateTime? date) {
     if (date == null) return '-';

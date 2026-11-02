@@ -1,5 +1,6 @@
 // views/pivot_point_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../core/connectivity_service.dart';
 import '../models/pivot_point_model.dart';

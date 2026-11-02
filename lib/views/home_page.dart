@@ -1,7 +1,8 @@
 // views/home_screen.dart
 import 'dart:async';
 import 'dart:math' show Random;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import 'hot_news_page.dart';
 import 'news_detail_page.dart';
@@ -17,6 +18,7 @@ import '../viewmodels/news_viewmodel.dart';
 import '../viewmodels/auth_viewmodel.dart';
 import '../utils/greeting.dart';
 import '../utils/page_transitions.dart';
+import '../l10n/app_strings.dart';
 
 
 const String kNewsCombinedQuery = 'Federal Reserve OR interest rate';
@@ -78,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Halo $namaDepan!', style: AppTextStyles.h2()),
+                      Text('Halo {nama}!'.trp({'nama': namaDepan}), style: AppTextStyles.h2()),
                       const SizedBox(height: 2),
                       Text(_greeting, style: AppTextStyles.bodyMd()),
                     ],

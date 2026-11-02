@@ -1,10 +1,12 @@
 // widgets/kalkulator_form_widgets.dart
 // Komponen formulir yang dipakai bersama oleh PivotPointPage dan NestPage.
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:flutter/services.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../utils/asset_labels.dart';
+import '../l10n/app_strings.dart';
 import 'offline_widgets.dart';
 import 'riwayat_button.dart';
 import 'tradingview_chart.dart';
@@ -20,7 +22,7 @@ const _kSimbolTradingView = {
   'hangseng': 'IG:HANGSENG',
 };
 
-const _kBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+List<String> get _kBulan => AppLang.bulan;
 
 // ===================== Fungsi bantu =====================
 

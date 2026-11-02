@@ -1,9 +1,11 @@
 // widgets/offline_widgets.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../core/connectivity_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
+import '../l10n/app_strings.dart';
 
 const kPesanOfflineUmum =
     'Fitur ini membutuhkan internet. Saat offline, hanya hitung manual Pivot Point dan Nest yang bisa dipakai.';
@@ -273,7 +275,7 @@ class OfflinePageScaffold extends StatelessWidget {
         foregroundColor: AppColors.textPrimary,
       ),
       body: SafeArea(
-        child: OfflineNotice(title: '$title butuh internet', message: message),
+        child: OfflineNotice(title: '{judul} butuh internet'.trp({'judul': title}), message: message),
       ),
     );
   }

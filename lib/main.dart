@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'widgets/app_text.dart';
+import 'l10n/app_strings.dart';
+import 'l10n/language_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'core/api_client.dart';
@@ -31,6 +35,8 @@ Future<void> main() async {
 
   final themeController = ThemeController();
   await themeController.load();
+  final languageController = LanguageController();
+  await languageController.load();
 
   final connectivity = ConnectivityService()..start();
   final apiClient = ApiClient(connectivity: connectivity);
@@ -71,6 +77,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => HistoriViewModel(HistoriService(apiClient))),
         ChangeNotifierProvider(create: (_) => NewsViewModel(NewsService(apiClient))),
         ChangeNotifierProvider.value(value: themeController),
+        ChangeNotifierProvider.value(value: languageController),
       ],
       child: const MyApp(),
     ),
@@ -84,11 +91,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Dibaca supaya MaterialApp ikut dibangun ulang saat mode berubah
     context.watch<ThemeController>();
+    context.watch<LanguageController>();
     final brightness = AppColors.isDark ? Brightness.dark : Brightness.light;
 
     return MaterialApp(
       title: 'Trust by Equityworld',
       debugShowCheckedModeBanner: false,
+      locale: Locale(AppLang.code),
+      supportedLocales: const [Locale('id'), Locale('en')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       navigatorKey: navigatorKey,
       scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(

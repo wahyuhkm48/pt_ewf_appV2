@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
+import '../l10n/app_strings.dart';
+import '../l10n/language_controller.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -10,7 +14,7 @@ class LanguagePage extends StatefulWidget {
 }
 
 class _LanguagePageState extends State<LanguagePage> {
-  String _selectedLanguage = 'id';
+  String _selectedLanguage = AppLang.code;
 
   final List<_LanguageOption> _languages = [
     _LanguageOption(
@@ -23,9 +27,9 @@ class _LanguagePageState extends State<LanguagePage> {
       code: 'en',
       flag: '🇬🇧',
       name: 'English',
-      subtitle: 'Gunakan Bahasa Inggris',
+      subtitle: 'Use English language',
     ),
-    _LanguageOption(
+    /*_LanguageOption(
       code: 'zh',
       flag: '🇨🇳',
       name: '中文',
@@ -36,7 +40,7 @@ class _LanguagePageState extends State<LanguagePage> {
       flag: '🇲🇾',
       name: 'Bahasa Melayu',
       subtitle: 'Gunakan Bahasa Melayu',
-    ),
+    ),*/
   ];
 
   @override
@@ -118,7 +122,7 @@ class _LanguagePageState extends State<LanguagePage> {
             Container(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.background,
                 border: Border(
                   top: BorderSide(
                     color: AppColors.divider,
@@ -130,12 +134,13 @@ class _LanguagePageState extends State<LanguagePage> {
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
+                  onPressed: () async {
+                    await context.read<LanguageController>().setLanguage(_selectedLanguage);
+                    if (context.mounted) Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.background,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
@@ -380,7 +385,7 @@ class _LanguageBubble extends StatelessWidget {
         color: color,
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.white,
+          color: AppColors.background,
           width: 3,
         ),
         boxShadow: [

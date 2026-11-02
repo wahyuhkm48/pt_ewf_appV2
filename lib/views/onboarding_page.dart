@@ -1,5 +1,6 @@
 // views/onboarding_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import 'welcome_page.dart';
@@ -96,7 +97,7 @@ class OnboardingPage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Get Started',
+                                'Mulai',
                                 style: AppTextStyles.labelLg(color: AppColors.textPrimary)
                                     .copyWith(fontWeight: FontWeight.w700),
                               ),

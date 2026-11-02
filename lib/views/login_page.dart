@@ -1,5 +1,6 @@
 // views/login_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -8,6 +9,7 @@ import '../utils/form_errors.dart';
 import '../widgets/password_field.dart';
 import '../widgets/offline_widgets.dart';
 import '../core/connectivity_service.dart';
+import '../l10n/app_strings.dart';
 import 'register_page.dart';
 import 'main_shell.dart';
 
@@ -209,11 +211,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: RichText(
                       text: TextSpan(
-                        text: "Belum punya akun? ",
+                        text: "Belum punya akun? ".tr,
                         style: AppTextStyles.bodySm(),
                         children: [
                           TextSpan(
-                            text: 'Daftar',
+                            text: 'Daftar'.tr,
                             style: AppTextStyles.labelMd(),
                           ),
                         ],

@@ -7,9 +7,10 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
 import 'watermark_config.dart';
 import '../models/histori_data_model.dart';
+import '../l10n/app_strings.dart';
 
 class HistoriPdfExporter {
-  static const _bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  static List<String> get _bulan => AppLang.bulan;
 
   static const _primary = PdfColor.fromInt(0xFFEC7013);
   static const _primaryTint = PdfColor.fromInt(0xFFFFF1E6);
@@ -23,7 +24,7 @@ class HistoriPdfExporter {
     required List<HistoriDataModel> data,
   }) async {
     final doc = pw.Document(
-      title: 'Data Historis $namaProduk',
+      title: 'Data Historis {produk}'.trp({'produk': namaProduk}),
       author: 'Trust by Equityworld',
     );
 
@@ -56,9 +57,9 @@ class HistoriPdfExporter {
               style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold, color: _primary),
             ),
             pw.SizedBox(height: 4),
-            pw.Text('Rentang data: $rentang',
+            pw.Text('Rentang data: {rentang}'.trp({'rentang': rentang}),
                 style: const pw.TextStyle(fontSize: 10, color: _textSecondary)),
-            pw.Text('Dicetak: ${_formatTanggal(DateTime.now())}',
+            pw.Text('Dicetak: {tanggal}'.trp({'tanggal': _formatTanggal(DateTime.now())}),
                 style: const pw.TextStyle(fontSize: 10, color: _textSecondary)),
             pw.SizedBox(height: 12),
           ],
@@ -68,13 +69,13 @@ class HistoriPdfExporter {
           children: [
             pw.Text('Trust by Equityworld',
                 style: const pw.TextStyle(fontSize: 9, color: _textSecondary)),
-            pw.Text('Halaman ${ctx.pageNumber} dari ${ctx.pagesCount}',
+            pw.Text('Halaman {n} dari {total}'.trp({'n': '${ctx.pageNumber}', 'total': '${ctx.pagesCount}'}),
                 style: const pw.TextStyle(fontSize: 9, color: _textSecondary)),
           ],
         ),
         build: (_) => [
           pw.TableHelper.fromTextArray(
-            headers: const ['Tanggal', 'Open', 'High', 'Low', 'Close'],
+            headers: ['Tanggal'.tr, 'Open', 'High', 'Low', 'Close'],
             data: data
                 .map((d) => [
                       _formatTanggal(d.tanggal),

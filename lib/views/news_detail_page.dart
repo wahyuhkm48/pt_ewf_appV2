@@ -1,5 +1,6 @@
 // views/news_detail_screen.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
@@ -8,6 +9,7 @@ import '../models/news_model.dart';
 import '../widgets/news_fallback_cover.dart';
 import '../widgets/offline_widgets.dart';
 import '../core/connectivity_service.dart';
+import '../l10n/app_strings.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final NewsModel article;
@@ -121,7 +123,7 @@ class NewsDetailPage extends StatelessWidget {
                       child: OutlinedButton.icon(
                         onPressed: online ? () => _bukaSumberAsli(context) : null,
                         icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                        label: Text('Baca Selengkapnya di ${article.sourceName}'),
+                        label: Text('Baca Selengkapnya di {sumber}'.trp({'sumber': article.sourceName})),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           side: BorderSide(color: online ? AppColors.primary : AppColors.divider),
@@ -140,7 +142,7 @@ class NewsDetailPage extends StatelessWidget {
   }
 
   String _formatTanggal(DateTime date) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    final months = AppLang.bulan;
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 }

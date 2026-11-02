@@ -1,6 +1,7 @@
 // lib/widgets/history_tiles.dart
 // Tile ini DIPINDAH dari history_page.dart (isinya sama, hanya nama jadi public).
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../models/pivot_point_model.dart';

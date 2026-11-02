@@ -1,5 +1,6 @@
 // views/data_historis_screen.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -9,10 +10,11 @@ import '../widgets/offline_widgets.dart';
 import '../viewmodels/histori_viewmodel.dart';
 import '../models/histori_data_model.dart';
 import '../utils/histori_pdf_exporter.dart';
+import '../l10n/app_strings.dart';
 
 enum _RangeFilter { all, last7, last30, custom }
 
-const _kBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+List<String> get _kBulan => AppLang.bulan;
 String _fmtTanggal(DateTime d) => '${d.day} ${_kBulan[d.month - 1]} ${d.year}';
 String _fmtPendek(DateTime d) => '${d.day} ${_kBulan[d.month - 1]}';
 
@@ -228,7 +230,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
               // ===== Judul + tombol refresh + Excel =====
               Row(
                 children: [
-                  Text('Data Pasar ${_tabs[_selectedTab]}', style: AppTextStyles.h3()),
+                  Text('Data Pasar {produk}'.trp({'produk': _tabs[_selectedTab]}), style: AppTextStyles.h3()),
                   const Spacer(),
                   _RefreshButton(loading: vm.isLoading, onTap: _refresh),
                   const SizedBox(width: 8),
@@ -243,7 +245,7 @@ class _DataHistoriPageState extends State<DataHistoriPage> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Text('Menampilkan ${filtered.length} dari ${all.length} data', style: AppTextStyles.caption()),
+                    Text('Menampilkan {n} dari {total} data'.trp({'n': '${filtered.length}', 'total': '${all.length}'}), style: AppTextStyles.caption()),
                     const Spacer(),
                     GestureDetector(
                       onTap: () => setState(_resetFilters),
@@ -487,7 +489,7 @@ class _RefreshButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Muat ulang dan atur ulang tampilan',
+      message: 'Muat ulang dan atur ulang tampilan'.tr,
       child: Material(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(10),

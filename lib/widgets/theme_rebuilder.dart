@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../core/theme_controller.dart';
+import '../l10n/language_controller.dart';
 
+/// Membangun ulang seluruh tampilan saat tema atau bahasa berubah.
 class ThemeRebuilder extends StatefulWidget {
   final Widget child;
   const ThemeRebuilder({super.key, required this.child});
@@ -12,17 +14,20 @@ class ThemeRebuilder extends StatefulWidget {
 }
 
 class _ThemeRebuilderState extends State<ThemeRebuilder> {
-  late final ThemeController _controller;
+  late final ThemeController _theme;
+  late final LanguageController _lang;
 
   @override
   void initState() {
     super.initState();
-    _controller = context.read<ThemeController>();
-    _controller.addListener(_onChanged);
+    _theme = context.read<ThemeController>();
+    _lang = context.read<LanguageController>();
+    _theme.addListener(_onChanged);
+    _lang.addListener(_onChanged);
   }
 
   void _onChanged() {
-    // Tunggu frame berikutnya supaya MaterialApp sudah memakai tema baru
+    // Tunggu frame berikutnya supaya MaterialApp sudah memakai nilai baru
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       void rebuild(Element el) {
@@ -36,7 +41,8 @@ class _ThemeRebuilderState extends State<ThemeRebuilder> {
 
   @override
   void dispose() {
-    _controller.removeListener(_onChanged);
+    _theme.removeListener(_onChanged);
+    _lang.removeListener(_onChanged);
     super.dispose();
   }
 

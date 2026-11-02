@@ -1,13 +1,15 @@
 // widgets/exportable_area.dart
 import 'dart:typed_data';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../utils/png_exporter.dart';
 import '../utils/watermark_config.dart';
+import '../l10n/app_strings.dart';
 import 'watermark_overlay.dart';
 
-const _bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+List<String> get _bulan => AppLang.bulan;
 
 String formatTanggalIndo(DateTime? d) {
   if (d == null) return '-';

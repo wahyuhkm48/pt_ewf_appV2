@@ -1,5 +1,6 @@
 // views/nest_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../core/connectivity_service.dart';
 import '../models/nest_model.dart';

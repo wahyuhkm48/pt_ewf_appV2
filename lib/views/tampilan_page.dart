@@ -1,5 +1,6 @@
 // views/tampilan_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:provider/provider.dart';
 import '../core/theme_controller.dart';
 import '../theme/app_colors.dart';

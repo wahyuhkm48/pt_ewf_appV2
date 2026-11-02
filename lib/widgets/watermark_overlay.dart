@@ -1,5 +1,6 @@
 // widgets/watermark_overlay.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import '../theme/app_colors.dart';
 import '../utils/watermark_config.dart';
 

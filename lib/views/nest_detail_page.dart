@@ -1,5 +1,6 @@
 // views/nest_detail_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../models/nest_model.dart';
@@ -7,6 +8,7 @@ import '../widgets/action_badge.dart';
 import '../widgets/mini_stat.dart';
 import '../widgets/exportable_area.dart';
 import '../utils/asset_labels.dart';
+import '../l10n/app_strings.dart';
 
 class NestDetailPage extends StatelessWidget {
   final NestModel item;
@@ -14,7 +16,7 @@ class NestDetailPage extends StatelessWidget {
 
   String _formatDate(DateTime? date) {
     if (date == null) return '-';
-    const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    final months = AppLang.bulan;
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 

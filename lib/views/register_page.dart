@@ -1,5 +1,6 @@
 // views/register_page.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_colors.dart';
@@ -9,6 +10,7 @@ import '../viewmodels/auth_viewmodel.dart';
 import '../widgets/password_field.dart';
 import '../widgets/offline_widgets.dart';
 import '../core/connectivity_service.dart';
+import '../l10n/app_strings.dart';
 import 'login_page.dart';
 import 'main_shell.dart';
 
@@ -112,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextField(
                       controller: namaCtrl,
                       decoration: InputDecoration(
-                        labelText: 'Nama Lengkap',
+                        labelText: 'Nama Lengkap'.tr,
                         labelStyle: AppTextStyles.bodyMd(),
                         enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.divider)),
                         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
@@ -140,7 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       keyboardType: TextInputType.phone,
                       inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9+\s-]'))],
                       decoration: InputDecoration(
-                        labelText: 'Nomor Telepon',
+                        labelText: 'Nomor Telepon'.tr,
                         labelStyle: AppTextStyles.bodyMd(),
                         enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.divider)),
                         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
@@ -209,10 +211,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       child: RichText(
                         text: TextSpan(
-                          text: 'Sudah punya akun? ',
+                          text: 'Sudah punya akun? '.tr,
                           style: AppTextStyles.bodySm(),
                           children: [
-                            TextSpan(text: 'Masuk', style: AppTextStyles.labelMd()),
+                            TextSpan(text: 'Masuk'.tr, style: AppTextStyles.labelMd()),
                           ],
                         ),
                       ),

@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import '../widgets/app_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
+import '../l10n/app_strings.dart';
 
 class HelpPage extends StatelessWidget {
   const HelpPage({super.key});
@@ -56,7 +58,7 @@ class HelpPage extends StatelessWidget {
       'Bagaimana cara melihat grafik dan data historis?',
       'Grafik harga tampil di halaman Pivot Point dan Nest, tepat di bawah pilihan Produk. '
           'Data Historis (Open, High, Low, Close) ada di menu Histori, lengkap dengan filter '
-          'tanggal, urutan, dan tombol Pdf untuk mengunduhnya.',
+          'tanggal, urutan, dan tombol PDF untuk mengunduhnya.',
     ),
     (
       Icons.newspaper_rounded,
@@ -67,7 +69,7 @@ class HelpPage extends StatelessWidget {
     (
       Icons.person_outline_rounded,
       'Bagaimana cara mengubah informasi akun saya?',
-      'Buka Penggaturan, lalu Informasi Akun. Nama lengkap, nomor telepon, dan foto profil '
+      'Buka Pengaturan, lalu Informasi Akun. Nama lengkap, nomor telepon, dan foto profil '
           '(dari galeri) bisa diubah. Email dan tanggal bergabung tidak bisa diubah.',
     ),
     (
@@ -80,7 +82,7 @@ class HelpPage extends StatelessWidget {
 
   Future<void> _hubungiSupport(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
-    final uri = Uri.parse('https://wa.me/$_nomorWa?text=${Uri.encodeComponent(_pesanWa)}');
+    final uri = Uri.parse('https://wa.me/$_nomorWa?text=${Uri.encodeComponent(_pesanWa.tr)}');
 
     final berhasil = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!berhasil) {
