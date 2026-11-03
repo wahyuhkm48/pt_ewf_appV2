@@ -332,4 +332,6 @@ const Map<String, String> enPart1 = {
   'Open (Hari ini)': 'Open (Today)',
   'Close (Kemarin)': 'Close (Yesterday)',
   'Isi Close (Kemarin) dan Open (Hari ini) dengan angka yang valid.': 'Enter valid numbers for Close (Yesterday) and Open (Today).',
+
+  'Berita sedang tidak dapat dimuat. Coba lagi sebentar lagi.': 'News cannot be loaded right now. Please try again shortly.',
 };

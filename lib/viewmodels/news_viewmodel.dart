@@ -12,7 +12,7 @@ class NewsViewModel extends ChangeNotifier {
   List<NewsModel>? articles;
 
   Future<void> loadNews({bool forceRefresh = false}) async {
-    if (articles != null && !forceRefresh) return;
+    if (articles != null && articles!.isNotEmpty && !forceRefresh) return;
 
     isLoading = true;
     errorMessage = null;
