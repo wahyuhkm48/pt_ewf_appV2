@@ -13,7 +13,7 @@ class AboutPage extends StatelessWidget {
     (Icons.savings_outlined, 'Emas Fisik', 'Hitung selisih harga, berat emas, dan estimasi keuntungan dari harga beli, harga jual, kurs, dan modal.'),
     (Icons.show_chart_rounded, 'Chart & Data Historis', 'Grafik interaktif Gold, Nikkei (JPK), dan Hang Seng (HKK) dengan data historis Open, High, Low, Close yang bisa diunduh ke PDF.'),
     (Icons.history_rounded, 'Riwayat', 'Simpan dan lihat kembali hasil perhitungan Pivot Point, Nest, dan Emas Fisik.'),
-    (Icons.newspaper_rounded, 'Berita', 'Berita pasar dan ekonomi terbaru dari CNBC dan Reuters.'),
+    (Icons.newspaper_rounded, 'Berita', 'Berita pasar dan ekonomi terbaru, langsung di aplikasi.'),
   ];
 
   @override

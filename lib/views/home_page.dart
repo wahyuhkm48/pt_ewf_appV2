@@ -222,7 +222,7 @@ class _WelcomeCardState extends State<_WelcomeCard> {
     ('assets/images/welcome/welcome_chart.webp', 'Pantau grafik', 'Lihat grafik Gold, Nikkei, dan Hang Seng di halaman Pivot Point dan Nest.'),
     ('assets/images/welcome/welcome_emas.webp', 'Hitung emas fisik', 'Cek selisih harga dan estimasi keuntunganmu.'),
     ('assets/images/welcome/welcome_nest.webp', 'Sinyal harian', 'Bandingkan Close kemarin dan Open hari ini lewat Nest.'),
-    ('assets/images/welcome/welcome_news.webp', 'Kabar terbaru', 'Baca berita pasar dari CNBC dan Reuters.'),
+    ('assets/images/welcome/welcome_news.webp', 'Kabar terbaru', 'Baca berita pasar terbaru langsung di aplikasi.'),
     ('assets/images/welcome/welcome_history.webp', 'Riwayat tersimpan', 'Lihat kembali hasil perhitunganmu lewat tombol Riwayat di tiap kalkulator.'),
   ];
 

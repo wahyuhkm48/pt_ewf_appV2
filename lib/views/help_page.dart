@@ -63,8 +63,8 @@ class HelpPage extends StatelessWidget {
     (
       Icons.newspaper_rounded,
       'Di mana saya bisa membaca berita pasar?',
-      'Berita terbaru dari CNBC dan Reuters tampil di bagian Informasi pada '
-          'halaman Beranda. Ketuk lihat semua untuk daftar lengkap, dan tarik layar ke bawah untuk memperbarui.',
+      'Berita pasar terbaru tampil di bagian Informasi pada halaman Beranda'
+          'Ketuk lihat semua untuk daftar lengkap, dan tarik layar ke bawah untuk memperbarui.',
     ),
     (
       Icons.person_outline_rounded,
