@@ -126,6 +126,18 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+  Future<bool> deleteFoto() async {
+    try {
+      employee = await _service.deleteFoto();
+      notifyListeners();
+      return true;
+    } catch (e) {
+      errorMessage = pesanError(e);
+      notifyListeners();
+      return false;
+    }
+  }
+
   Future<bool> changePassword({
     required String currentPassword,
     required String newPassword,

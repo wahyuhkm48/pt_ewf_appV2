@@ -96,6 +96,86 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
     }
   }
 
+  /// Ketuk ikon kamera: kalau sudah punya foto, tawarkan pilihan. Kalau belum, langsung galeri.
+  Future<void> _menuFoto(AuthViewModel auth) async {
+    final punyaFoto = auth.employee?.foto?.isNotEmpty ?? false;
+
+    if (!punyaFoto) {
+      await _pilihFoto(auth);
+      return;
+    }
+
+    final pilihan = await showModalBottomSheet<String>(
+      context: context,
+      backgroundColor: AppColors.background,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            ListTile(
+              leading: Icon(Icons.photo_library_outlined, color: AppColors.textPrimary),
+              title: const Text('Pilih dari galeri'),
+              onTap: () => Navigator.pop(sheetContext, 'galeri'),
+            ),
+            ListTile(
+              leading: Icon(Icons.delete_outline_rounded, color: AppColors.danger),
+              title: Text('Hapus foto', style: TextStyle(color: AppColors.danger)),
+              onTap: () => Navigator.pop(sheetContext, 'hapus'),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+
+    if (!mounted || pilihan == null) return;
+
+    if (pilihan == 'galeri') {
+      await _pilihFoto(auth);
+    } else if (pilihan == 'hapus') {
+      await _hapusFoto(auth);
+    }
+  }
+
+  Future<void> _hapusFoto(AuthViewModel auth) async {
+    final yakin = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Hapus foto profil?'),
+        content: const Text('Foto profilmu akan dihapus dan diganti inisial namamu.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text('Hapus', style: TextStyle(color: AppColors.danger)),
+          ),
+        ],
+      ),
+    );
+
+    if (yakin != true || !mounted) return;
+
+    setState(() => _uploadingFoto = true);
+    try {
+      final ok = await auth.deleteFoto();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(ok ? 'Foto profil dihapus' : (auth.errorMessage ?? 'Gagal menghapus foto')),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _uploadingFoto = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final online = context.watch<ConnectivityService>().isOnline;
@@ -129,7 +209,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
                   bottom: 0,
                   right: 0,
                   child: GestureDetector(
-                    onTap: _uploadingFoto ? null : () => _pilihFoto(auth),
+                    onTap: _uploadingFoto ? null : () => _menuFoto(auth),
                     child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(color: AppColors.textPrimary, shape: BoxShape.circle),

@@ -78,6 +78,12 @@ class ApiClient {
     return _handle(res);
   }
 
+  Future<dynamic> delete(String path) async {
+    final headers = await _headers();
+    final res = await _kirim(() => http.delete(Uri.parse('$baseUrl$path'), headers: headers));
+    return _handle(res);
+  }
+
   Future<dynamic> postMultipart(
     String path, {
     required String fieldName,

@@ -334,4 +334,13 @@ const Map<String, String> enPart1 = {
   'Isi Close (Kemarin) dan Open (Hari ini) dengan angka yang valid.': 'Enter valid numbers for Close (Yesterday) and Open (Today).',
 
   'Berita sedang tidak dapat dimuat. Coba lagi sebentar lagi.': 'News cannot be loaded right now. Please try again shortly.',
+
+  // ===== Hapus foto profil =====
+  'Pilih dari galeri': 'Choose from gallery',
+  'Hapus foto': 'Delete photo',
+  'Hapus foto profil?': 'Delete profile photo?',
+  'Foto profilmu akan dihapus dan diganti inisial namamu.': 'Your profile photo will be deleted and replaced with your initials.',
+  'Hapus': 'Delete',
+  'Foto profil dihapus': 'Profile photo deleted',
+  'Gagal menghapus foto': 'Failed to delete photo',
 };

@@ -98,6 +98,13 @@ class AuthService {
     return e;
   }
 
+  Future<EmployeeModel> deleteFoto() async {
+    final res = await _client.delete('/profile/foto');
+    final e = EmployeeModel.fromJson(res['employee']);
+    await _simpanCache(e);
+    return e;
+  }
+
   Future<void> changePassword({
     required String currentPassword,
     required String newPassword,
