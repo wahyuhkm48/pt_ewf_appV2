@@ -3,7 +3,6 @@ class EmployeeModel {
   final String userId;
   final String namaLengkap;
   final String email;
-  final String role;
   final String? foto;
   final String? noTelp;
   final DateTime? createdAt;
@@ -12,7 +11,6 @@ class EmployeeModel {
     required this.userId,
     required this.namaLengkap,
     required this.email,
-    required this.role,
     this.foto,
     this.noTelp,
     this.createdAt,
@@ -22,7 +20,6 @@ class EmployeeModel {
         userId: json['user_id'],
         namaLengkap: json['nama_lengkap'],
         email: json['email'],
-        role: json['role'],
         foto: json['foto'],
         noTelp: json['no_telp'],
         createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at']) : null,
@@ -32,7 +29,6 @@ class EmployeeModel {
         'user_id': userId,
         'nama_lengkap': namaLengkap,
         'email': email,
-        'role': role,
         'foto': foto,
         'no_telp': noTelp,
         'created_at': createdAt?.toIso8601String(),

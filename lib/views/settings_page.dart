@@ -71,11 +71,6 @@ class SettingsPage extends StatelessWidget {
               employee?.namaLengkap ?? 'Pengguna',
               style: AppTextStyles.h3(),
             ),
-            const SizedBox(height: 2),
-            Text(
-              employee?.role ?? '-',
-              style: AppTextStyles.bodySm(),
-            ),
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
