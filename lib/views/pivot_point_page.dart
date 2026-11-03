@@ -14,6 +14,7 @@ import '../widgets/exportable_area.dart';
 import '../widgets/kalkulator_form_widgets.dart';
 import '../widgets/mini_stat.dart';
 import '../widgets/hasil_disclaimer.dart';
+import '../widgets/pivot_point_penjelasan.dart';
 import '../l10n/app_strings.dart';
 import 'riwayat_kalkulator_page.dart';
 
@@ -312,9 +313,9 @@ class _PivotPointPageState extends State<PivotPointPage> {
                   namaFile: 'pivot_${result.asset ?? 'manual'}',
                   judul: 'Pivot Point',
                   subjudul: subjudulExport(result.asset, result.tanggal),
-                  child: Column(
+                  builder: (context, capturing) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _buildResult(result),
+                    children: _buildResult(result, capturing),
                   ),
                 ),
               ],
@@ -325,7 +326,7 @@ class _PivotPointPageState extends State<PivotPointPage> {
     );
   }
 
-  List<Widget> _buildResult(PivotPointModel result) {
+  List<Widget> _buildResult(PivotPointModel result, bool capturing) {
     return [
       Text('Hasil Pivot Point', style: AppTextStyles.h3(color: AppColors.primary)),
       const SizedBox(height: 12),
@@ -348,6 +349,12 @@ class _PivotPointPageState extends State<PivotPointPage> {
       ),
       const SizedBox(height: 16),
 
+      // Hanya di PNG: tabel penjelasan tepat di bawah tabel OHLC
+      if (capturing) ...[
+        const PivotPointPenjelasanTable(),
+        const SizedBox(height: 16),
+      ],
+
       Container(
         decoration: BoxDecoration(
           color: AppColors.background,
@@ -357,22 +364,23 @@ class _PivotPointPageState extends State<PivotPointPage> {
         child: Column(children: buildPivotLevelRows(result)),
       ),
 
-      const SizedBox(height: 16),
-      const HasilDisclaimer(),
-      const SizedBox(height: 16),
-
-      Text('Indikator Action', style: AppTextStyles.h3(color: AppColors.primary)),
-      // Action + keterangan sekarang di bawah tabel level
-      if (result.action != null) ...[
+      // Hanya di layar: PNG tanpa indikator
+      if (!capturing) ...[
         const SizedBox(height: 16),
-        ActionBadge(action: result.action!),
-        if (result.open != null) ...[
-          const SizedBox(height: 12),
-          PivotPointWhyCard(
-            action: result.action!,
-            pivotPoint: result.pivotPoint,
-            open: result.open!,
-          ),
+        const HasilDisclaimer(),
+        const SizedBox(height: 16),
+        Text('Indikator Action', style: AppTextStyles.h3(color: AppColors.primary)),
+        if (result.action != null) ...[
+          const SizedBox(height: 16),
+          ActionBadge(action: result.action!),
+          if (result.open != null) ...[
+            const SizedBox(height: 12),
+            PivotPointWhyCard(
+              action: result.action!,
+              pivotPoint: result.pivotPoint,
+              open: result.open!,
+            ),
+          ],
         ],
       ],
     ];

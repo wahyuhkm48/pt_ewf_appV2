@@ -8,6 +8,7 @@ import '../widgets/action_badge.dart';
 import '../widgets/mini_stat.dart';
 import '../widgets/exportable_area.dart';
 import '../widgets/hasil_disclaimer.dart';
+import '../widgets/pivot_point_penjelasan.dart';
 import '../utils/pivot_point_levels.dart';
 import '../utils/asset_labels.dart';
 import '../l10n/app_strings.dart';
@@ -60,7 +61,7 @@ class PivotPointDetailPage extends StatelessWidget {
                 namaFile: 'pivot_${item.asset ?? 'riwayat'}',
                 judul: 'Pivot Point',
                 subjudul: '${assetLabel(item.asset)} • ${_formatDate(item.tanggal)}',
-                child: Column(
+                builder: (context, capturing) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
@@ -81,6 +82,11 @@ class PivotPointDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
 
+                    if (capturing) ...[
+                      const PivotPointPenjelasanTable(),
+                      const SizedBox(height: 16),
+                    ],
+
                     Container(
                       decoration: BoxDecoration(
                         color: AppColors.background,
@@ -89,13 +95,15 @@ class PivotPointDetailPage extends StatelessWidget {
                       ),
                       child: Column(children: buildPivotLevelRows(item)),
                     ),
-                    const SizedBox(height: 24),
 
-                    if (item.action != null) ...[
-                      const HasilDisclaimer(),
-                      const SizedBox(height: 12),
-                      ActionBadge(action: item.action!),
-                      const SizedBox(height: 16),
+                    if (!capturing) ...[
+                      const SizedBox(height: 24),
+                      if (item.action != null) ...[
+                        const HasilDisclaimer(),
+                        const SizedBox(height: 12),
+                        ActionBadge(action: item.action!),
+                        const SizedBox(height: 16),
+                      ],
                     ],
                   ],
                 ),

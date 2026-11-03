@@ -342,4 +342,6 @@ const Map<String, String> enPart1 = {
   'Hapus': 'Delete',
   'Foto profil dihapus': 'Profile photo deleted',
   'Gagal menghapus foto': 'Failed to delete photo',
+
+  'Penjelasan Pivot Point': 'Pivot Point Explanation',
 };

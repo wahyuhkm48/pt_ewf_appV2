@@ -19,19 +19,21 @@ String formatTanggalIndo(DateTime? d) {
 String _dua(int v) => v.toString().padLeft(2, '0');
 
 class ExportableArea extends StatefulWidget {
-  /// Awal nama file, mis. 'pivot_gold'. Stempel waktu ditambahkan otomatis.
   final String namaFile;
-  final String judul;      // mis. 'Pivot Point'
-  final String? subjudul;  // mis. 'Gold • 20 Okt 2026'
-  final Widget child;
+  final String judul;
+  final String? subjudul;
+  final Widget? child;
+  /// Alternatif dari [child]: dapat flag [capturing] (true hanya saat membuat PNG).
+  final Widget Function(BuildContext context, bool capturing)? builder;
 
   const ExportableArea({
     super.key,
     required this.namaFile,
     required this.judul,
     this.subjudul,
-    required this.child,
-  });
+    this.child,
+    this.builder,
+  }) : assert(child != null || builder != null, 'Isi child atau builder');
 
   @override
   State<ExportableArea> createState() => _ExportableAreaState();
@@ -124,7 +126,7 @@ class _ExportableAreaState extends State<ExportableArea> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (_capturing) ..._header(),
-                      widget.child,
+                      widget.builder?.call(context, _capturing) ?? widget.child!,
                       if (_capturing) ..._footer(),
                     ],
                   ),
