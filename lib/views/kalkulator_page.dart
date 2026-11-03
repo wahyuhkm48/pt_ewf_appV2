@@ -38,7 +38,7 @@ class KalkulatorPage extends StatelessWidget {
             iconAsset: 'assets/images/icons/emas_fisik.png',
             title: 'Emas Fisik',
             subtitle: online
-                ? 'Hitung selisih harga dan estimasi keuntungan emas fisik.'
+                ? 'Emas yang memiliki bentuk nyata dan bisa dipegang langsung, seperti emas batangan atau perhiasan.'
                 : 'Butuh internet, belum bisa dipakai saat offline.',
             onTap: () => onOpen(const EmasFisikPage()),
           ),
@@ -120,13 +120,13 @@ class _KonsepTransaksiCardState extends State<_KonsepTransaksiCard> {
                       _SubItem(
                         iconAsset: 'assets/images/welcome/pivot_point.webp',
                         title: 'Pivot Point',
-                        subtitle: 'Level support, resistance, dan sinyal buy atau sell.',
+                        subtitle: 'Harga wajar atau harga pasaran, untuk menentukan aksi beli dan jual yang mengacu pada harga pembukaan (open).',
                         onTap: widget.onOpenPivot,
                       ),
                       _SubItem(
                         iconAsset: 'assets/images/welcome/nest.webp',
                         title: 'Nest',
-                        subtitle: 'Sinyal harian dari Close kemarin dan Open hari ini.',
+                        subtitle: 'Konsep mengikuti tren mengacu pada harga penutupan kemarin dibandingkan dengan harga pembukaan kemarin untuk menentukan arah transaksi selanjutnya.',
                         onTap: widget.onOpenNest,
                       ),
                       const SizedBox(height: 4),
