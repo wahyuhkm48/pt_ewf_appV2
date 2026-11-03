@@ -401,8 +401,8 @@ void bukaPanduanNest(BuildContext context) {
     children: [
       const PanduanJudul('Pengertian Konsep Nest'),
       const PanduanParagraf(
-        'Konsep Nest adalah konsep follow the trend yang mengacu pada harga penutupan kemarin '
-        'dibandingkan dengan harga pembukaan kemarin untuk menentukan arah transaksi selanjutnya.',
+        'Konsep Nest adalah Konsep mengikuti tren mengacu pada harga penutupan kemarin'
+          'dibandingkan dengan harga pembukaan kemarin untuk menentukan arah transaksi selanjutnya.',
       ),
       const SizedBox(height: 22),
       const PanduanJudul('Aturan Penentuan Aksi'),

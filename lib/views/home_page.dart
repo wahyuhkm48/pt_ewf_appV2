@@ -339,14 +339,14 @@ class _AboutAppSection extends StatelessWidget {
           left: _FeatureTile(
             iconAsset: 'assets/images/welcome/pivot_point.webp',
             title: 'Pivot Point',
-            desc: 'Level support, resistance, dan sinyal buy atau sell.',
+            desc: 'Harga wajar atau harga pasaran, untuk menentukan aksi beli dan jual yang mengacu pada harga pembukaan (open).',
             bg: AppColors.primaryTint,
             fg: AppColors.primary,
           ),
           right: _FeatureTile(
             iconAsset: 'assets/images/welcome/nest.webp',
             title: 'Nest',
-            desc: 'Sinyal harian dari Close kemarin dan Open hari ini.',
+            desc: 'Konsep mengikuti tren mengacu pada harga penutupan kemarin dibandingkan dengan harga pembukaan kemarin untuk menentukan arah transaksi selanjutnya.',
             bg: AppColors.secondaryTint,
             fg: AppColors.secondary,
           ),
@@ -356,7 +356,7 @@ class _AboutAppSection extends StatelessWidget {
           left: _FeatureTile(
             iconAsset: 'assets/images/welcome/emas_fisik.webp',
             title: 'Emas Fisik',
-            desc: 'Selisih harga dan estimasi keuntungan.',
+            desc: 'Emas yang memiliki bentuk nyata dan bisa dipegang langsung, seperti emas batangan atau perhiasan.',
             bg: AppColors.successBg,
             fg: AppColors.success,
           ),
