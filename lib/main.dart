@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'core/api_client.dart';
 import 'core/connectivity_service.dart';
 import 'core/theme_controller.dart';
+import 'core/session_watcher.dart';
 import 'services/auth_service.dart';
 import 'services/pivot_point_service.dart';
 import 'services/emas_fisik_service.dart';
@@ -45,11 +46,11 @@ Future<void> main() async {
 
   // Server menolak token (401): bersihkan sesi lalu kembalikan user ke Login.
   var sedangMenangani = false;
-  apiClient.onUnauthorized = () async {
-    if (sedangMenangani) return; // beberapa request bisa 401 bersamaan
+  apiClient.onUnauthorized = (digantikan) async {
+    if (sedangMenangani) return;
     sedangMenangani = true;
     try {
-      if (!await authService.hasToken()) return; // sudah ditangani
+      if (!await authService.hasToken()) return;
       await authService.clearSession();
       authViewModel.clearEmployee();
 
@@ -57,13 +58,20 @@ Future<void> main() async {
         MaterialPageRoute(builder: (_) => const LoginPage()),
         (route) => false,
       );
-      scaffoldMessengerKey.currentState?.showSnackBar(
-        const SnackBar(content: Text('Sesi kamu berakhir. Silakan login lagi.')),
-      );
+
+      if (digantikan) {
+        _tampilkanDialogSesiDigantikan();
+      } else {
+        scaffoldMessengerKey.currentState?.showSnackBar(
+          const SnackBar(content: Text('Sesi kamu berakhir. Silakan login lagi.')),
+        );
+      }
     } finally {
       sedangMenangani = false;
     }
   };
+
+  SessionWatcher(authService).start();
 
   runApp(
     MultiProvider(
@@ -82,6 +90,32 @@ Future<void> main() async {
       child: const MyApp(),
     ),
   );
+}
+
+void _tampilkanDialogSesiDigantikan() {
+  // Tunggu LoginPage terpasang, baru dialog muncul di atasnya.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    final ctx = navigatorKey.currentState?.overlay?.context;
+    if (ctx == null) return;
+    showDialog<void>(
+      context: ctx,
+      barrierDismissible: false,
+      builder: (dialogCtx) => AlertDialog(
+        icon: const Icon(Icons.devices_other_rounded, color: AppColors.primary, size: 32),
+        title: const Text('Akun digunakan di perangkat lain'),
+        content: const Text(
+          'Akunmu baru saja login di perangkat lain, jadi kamu otomatis keluar dari perangkat ini. '
+          'Jika itu bukan kamu, segera ganti password setelah login.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(),
+            child: const Text('Mengerti'),
+          ),
+        ],
+      ),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {

@@ -344,4 +344,8 @@ const Map<String, String> enPart1 = {
   'Gagal menghapus foto': 'Failed to delete photo',
 
   'Penjelasan Pivot Point': 'Pivot Point Explanation',
+
+  'Akun digunakan di perangkat lain': 'Account used on another device',
+'Akunmu baru saja login di perangkat lain, jadi kamu otomatis keluar dari perangkat ini. Jika itu bukan kamu, segera ganti password setelah login.':
+    'Your account was just signed in on another device, so you were signed out of this one. If this wasn\'t you, change your password right after signing in.',
 };

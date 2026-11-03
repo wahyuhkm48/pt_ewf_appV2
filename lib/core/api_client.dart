@@ -15,7 +15,7 @@ class ApiClient {
   final _storage = const FlutterSecureStorage();
 
   /// Dipanggil saat server menolak token (401). Diisi di main.dart.
-  Future<void> Function()? onUnauthorized;
+  Future<void> Function(bool digantikan)? onUnauthorized;
 
   Future<Map<String, String>> _headers({bool withAuth = true}) async {
     final headers = {
@@ -108,8 +108,18 @@ class ApiClient {
     // Server menolak token: sesi berakhir. Login dengan password salah tidak
     // lewat sini (withAuth = false, dan backend membalas 422).
     if (res.statusCode == 401 && withAuth) {
-      onUnauthorized?.call();
-      throw ApiException('Sesi kamu berakhir. Silakan login lagi.', statusCode: 401);
+      String? kode;
+      try {
+        final b = jsonDecode(res.body);
+        if (b is Map) kode = b['code']?.toString();
+      } catch (_) {}
+      final digantikan = kode == 'session_replaced';
+
+      onUnauthorized?.call(digantikan);
+      throw ApiException(
+        digantikan ? 'Akun kamu login di perangkat lain.' : 'Sesi kamu berakhir. Silakan login lagi.',
+        statusCode: 401,
+      );
     }
 
     final decoded = jsonDecode(res.body);
