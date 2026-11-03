@@ -12,14 +12,15 @@ List<Widget> buildPivotLevelRows(PivotPointModel result) {
   for (var i = 0; i < labels.length; i++) {
     final isPP = labels[i] == 'PP';
     final isResistance = labels[i].startsWith('R');
-    final dotColor = isPP ? AppColors.primary : (isResistance ? AppColors.danger : AppColors.success);
+    final color = isPP ? AppColors.primary : (isResistance ? AppColors.success : AppColors.danger);
 
     rows.add(LevelRow(
       label: isPP
           ? 'Pivot Point (PP)'
           : '${isResistance ? 'Resistance' : 'Support'} ${labels[i].substring(1)} (${labels[i]})',
       value: values[i].toStringAsFixed(2),
-      dotColor: dotColor,
+      color: color,
+      isPivot: isPP,
       isFirst: i == 0,
     ));
 
@@ -28,7 +29,7 @@ List<Widget> buildPivotLevelRows(PivotPointModel result) {
       rows.add(LevelRow(
         label: 'Midpoint (${labels[i]}-${labels[i + 1]})',
         value: mid.toStringAsFixed(2),
-        dotColor: AppColors.textSecondary,
+        color: AppColors.textSecondary,
         isMidpoint: true,
       ));
     }

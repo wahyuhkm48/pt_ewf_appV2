@@ -319,7 +319,13 @@ const Map<String, String> enPart1 = {
   'Contoh: 2.510': 'Example: 2,510',
   'Contoh: 10.000.000': 'Example: 10,000,000',
 
-    // ===== Kalkulator: tanggal dan label =====
+  // ===== Hasil Pivot Point / Nest =====
+  'Indikator di bawah adalah hasil perhitungan dari data harga, bukan saran investasi atau jaminan keuntungan.': 'The indicator below is a calculation result based on price data, not investment advice or a guarantee of profit.',
+  'Indikator Action': 'Action Indicator',
+  'Hasil Pivot Point': 'Pivot Point Result',
+  'Hasil Nest': 'Nest Result',
+
+  // ===== Kalkulator: tanggal dan label =====
   'Tanggal': 'Date',
   'Hari ini, {tanggal}': 'Today, {tanggal}',
   '{label} • Perhitungan manual': '{label} • Manual calculation',

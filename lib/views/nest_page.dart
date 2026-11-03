@@ -13,6 +13,7 @@ import '../widgets/education_sections.dart';
 import '../widgets/exportable_area.dart';
 import '../widgets/kalkulator_form_widgets.dart';
 import '../widgets/mini_stat.dart';
+import '../widgets/hasil_disclaimer.dart';
 import 'riwayat_kalkulator_page.dart';
 
 /// Halaman kalkulator Nest.
@@ -278,6 +279,8 @@ class _NestPageState extends State<NestPage> {
         ),
       ),
 
+      const SizedBox(height: 16),
+      const HasilDisclaimer(),
       const SizedBox(height: 16),
 
       Text('Indikator Action', style: AppTextStyles.h3(color: AppColors.primary)),

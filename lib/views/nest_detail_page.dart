@@ -7,6 +7,7 @@ import '../models/nest_model.dart';
 import '../widgets/action_badge.dart';
 import '../widgets/mini_stat.dart';
 import '../widgets/exportable_area.dart';
+import '../widgets/hasil_disclaimer.dart';
 import '../utils/asset_labels.dart';
 import '../l10n/app_strings.dart';
 
@@ -76,6 +77,8 @@ class NestDetailPage extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 16),
+                    const HasilDisclaimer(),
+                    const SizedBox(height: 12),
                     ActionBadge(action: item.action),
                     const SizedBox(height: 16),
                   ],

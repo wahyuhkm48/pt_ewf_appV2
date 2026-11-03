@@ -7,6 +7,7 @@ import '../models/pivot_point_model.dart';
 import '../widgets/action_badge.dart';
 import '../widgets/mini_stat.dart';
 import '../widgets/exportable_area.dart';
+import '../widgets/hasil_disclaimer.dart';
 import '../utils/pivot_point_levels.dart';
 import '../utils/asset_labels.dart';
 import '../l10n/app_strings.dart';
@@ -91,6 +92,8 @@ class PivotPointDetailPage extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     if (item.action != null) ...[
+                      const HasilDisclaimer(),
+                      const SizedBox(height: 12),
                       ActionBadge(action: item.action!),
                       const SizedBox(height: 16),
                     ],

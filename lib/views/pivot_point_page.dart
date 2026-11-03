@@ -13,8 +13,9 @@ import '../widgets/education_sections.dart';
 import '../widgets/exportable_area.dart';
 import '../widgets/kalkulator_form_widgets.dart';
 import '../widgets/mini_stat.dart';
-import 'riwayat_kalkulator_page.dart';
+import '../widgets/hasil_disclaimer.dart';
 import '../l10n/app_strings.dart';
+import 'riwayat_kalkulator_page.dart';
 
 /// Halaman kalkulator Pivot Point.
 class PivotPointPage extends StatefulWidget {
@@ -356,7 +357,10 @@ class _PivotPointPageState extends State<PivotPointPage> {
         child: Column(children: buildPivotLevelRows(result)),
       ),
 
-      const SizedBox(height: 24),
+      const SizedBox(height: 16),
+      const HasilDisclaimer(),
+      const SizedBox(height: 16),
+
       Text('Indikator Action', style: AppTextStyles.h3(color: AppColors.primary)),
       // Action + keterangan sekarang di bawah tabel level
       if (result.action != null) ...[
