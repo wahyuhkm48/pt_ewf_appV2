@@ -64,10 +64,15 @@ class _ExportableAreaState extends State<ExportableArea> {
     } catch (e, st) {
       debugPrint('EKSPOR PNG GAGAL: $e\n$st');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 10),
-            content: Text('Gagal: $e'),
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: const Text('Error ekspor'),
+            content: SingleChildScrollView(
+              child: SelectableText(
+                '$e\n\n${st.toString().split('\n').take(12).join('\n')}',
+              ),
+            ),
           ),
         );
       }
