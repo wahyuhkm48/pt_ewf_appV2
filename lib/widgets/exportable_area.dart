@@ -62,10 +62,13 @@ class _ExportableAreaState extends State<ExportableArea> {
         sharePositionOrigin: origin,
       );
     } catch (e, st) {
-      debugPrint('EKSPOR PNG GAGAL: $e\n$st'); // <- penyebab asli kelihatan di log
+      debugPrint('EKSPOR PNG GAGAL: $e\n$st');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gagal mengekspor gambar. Coba lagi.')),
+          SnackBar(
+            duration: const Duration(seconds: 10),
+            content: Text('Gagal: $e'),
+          ),
         );
       }
     } finally {
