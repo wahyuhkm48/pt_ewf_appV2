@@ -46,6 +46,7 @@ class _ExportableAreaState extends State<ExportableArea> {
 
   Future<void> _export() async {
     if (_busy) return;
+    // Posisi tombol share untuk iPad (di Android diabaikan)
     final box = context.findRenderObject() as RenderBox?;
     final origin = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
 
@@ -53,7 +54,8 @@ class _ExportableAreaState extends State<ExportableArea> {
     try {
       final bytes = await _capture();
       final now = DateTime.now();
-      final stamp = '${now.year}${_dua(now.month)}${_dua(now.day)}_${_dua(now.hour)}${_dua(now.minute)}';
+      final stamp =
+          '${now.year}${_dua(now.month)}${_dua(now.day)}_${_dua(now.hour)}${_dua(now.minute)}';
       await PngExporter.share(
         bytes,
         namaFile: '${widget.namaFile}_$stamp',
@@ -62,18 +64,10 @@ class _ExportableAreaState extends State<ExportableArea> {
         sharePositionOrigin: origin,
       );
     } catch (e, st) {
-      debugPrint('EKSPOR PNG GAGAL: $e\n$st');
+      debugPrint('EKSPOR PNG GAGAL: $e\n$st'); // untuk logcat / flutter logs
       if (mounted) {
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: const Text('Error ekspor'),
-            content: SingleChildScrollView(
-              child: SelectableText(
-                '$e\n\n${st.toString().split('\n').take(12).join('\n')}',
-              ),
-            ),
-          ),
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Gagal mengekspor gambar. Coba lagi.')),
         );
       }
     } finally {
@@ -82,8 +76,13 @@ class _ExportableAreaState extends State<ExportableArea> {
   }
 
   Future<Uint8List> _capture() async {
-    // Pastikan logo watermark sudah ter-decode sebelum di-capture
-    await precacheImage(const AssetImage(WatermarkConfig.logoAsset), context);
+    // Pastikan logo watermark sudah ter-decode sebelum di-capture.
+    // Kalau aset bermasalah, ekspor tetap jalan (hanya watermark yang kosong).
+    try {
+      await precacheImage(const AssetImage(WatermarkConfig.logoAsset), context);
+    } catch (_) {}
+
+    if (!mounted) throw Exception('Halaman sudah ditutup.');
 
     setState(() => _capturing = true);
     try {

@@ -1,6 +1,5 @@
 // utils/png_exporter.dart
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,8 @@ class PngExporter {
   /// (banyak HP Android hanya kuat sekitar 4096 px).
   static const double _maxSidePx = 4096;
 
+  /// Ubah isi RepaintBoundary (yang ditunjuk [key]) menjadi bytes PNG.
+  /// [pixelRatio] 3 = tajam; otomatis diturunkan kalau areanya terlalu panjang.
   static Future<Uint8List> capture(GlobalKey key, {double pixelRatio = 3}) async {
     final boundary =
         key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
@@ -20,11 +21,13 @@ class PngExporter {
       throw Exception('Area hasil belum siap diekspor.');
     }
 
-    // Tunggu sampai benar-benar selesai digambar (loop, bukan sekali saja).
-    // Di release, debugNeedsPaint selalu false jadi loop ini langsung lewat.
-    var tries = 0;
-    while (boundary.debugNeedsPaint && tries++ < 10) {
-      await Future.delayed(const Duration(milliseconds: 20));
+    // debugNeedsPaint HANYA boleh dibaca di mode debug. Di release getter ini
+    // melempar LateInitializationError karena assert-nya dihapus compiler.
+    if (kDebugMode) {
+      var tries = 0;
+      while (boundary.debugNeedsPaint && tries++ < 10) {
+        await Future.delayed(const Duration(milliseconds: 20));
+      }
     }
 
     // Turunkan pixelRatio otomatis kalau areanya panjang.
@@ -45,6 +48,8 @@ class PngExporter {
     }
   }
 
+  /// Simpan ke folder sementara lalu buka share sheet
+  /// (sama seperti ekspor Excel: Simpan ke File/Foto, WhatsApp, dll).
   static Future<void> share(
     Uint8List bytes, {
     required String namaFile,
