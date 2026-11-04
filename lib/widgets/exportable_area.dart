@@ -46,6 +46,9 @@ class _ExportableAreaState extends State<ExportableArea> {
 
   Future<void> _export() async {
     if (_busy) return;
+    final box = context.findRenderObject() as RenderBox?;
+    final origin = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
+
     setState(() => _busy = true);
     try {
       final bytes = await _capture();
@@ -56,8 +59,10 @@ class _ExportableAreaState extends State<ExportableArea> {
         namaFile: '${widget.namaFile}_$stamp',
         subject: widget.judul,
         text: '${widget.judul} - Trust by Equityworld',
+        sharePositionOrigin: origin,
       );
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('EKSPOR PNG GAGAL: $e\n$st'); // <- penyebab asli kelihatan di log
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Gagal mengekspor gambar. Coba lagi.')),
